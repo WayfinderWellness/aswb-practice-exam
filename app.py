@@ -57,20 +57,25 @@ def display_question(index):
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
 
-    # Use None for an unselected default if no answer is stored, else show saved answer
-    selected_option = st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else None
-    
-    # Display radio buttons with no selection if no answer, else restore the selection
+    # Determine the initial selection based on stored answer
+    selected_option = st.session_state.user_answers[index]
+
+    # If no answer is selected yet, do not set an initial index (appears unselected)
+    if selected_option is not None:
+        default_index = question["options"].index(selected_option)
+    else:
+        default_index = None
+
+    # Display radio buttons without an initial selection if no answer is stored
     user_answer = st.radio(
         "Choose an answer:", 
-        options=[None] + question["options"],  # Adding None as the first option
-        index=0 if selected_option is None else question["options"].index(selected_option) + 1,
-        format_func=lambda x: "" if x is None else x,  # Display empty text for None
+        options=question["options"],
+        index=default_index if default_index is not None else 0,
         key=f"question_{index}"
     )
-
-    # Save the selected answer, excluding the None placeholder
-    if user_answer is not None:
+    
+    # Update the answer only if the user actually selects an option
+    if user_answer:
         st.session_state.user_answers[index] = user_answer
 
 def calculate_score():
