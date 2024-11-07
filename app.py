@@ -56,6 +56,11 @@ def toggle_bookmark(question_index):
     else:
         st.session_state.bookmarks.add(question_index)
 
+# Jump to a specific question
+def go_to_question(index):
+    """Set the current question to the specified index."""
+    st.session_state.current_question = index
+
 # Navigation functions to handle button clicks
 def next_question():
     if st.session_state.current_question < len(questions) - 1:
@@ -120,8 +125,8 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         <style>
         .progress-container {{
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.1); /* Faint background for remaining portion */
-            border: 1px solid rgba(0, 0, 0, 0.3);  /* Faint border for the entire progress bar */
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.3);
             border-radius: 5px;
             height: 20px;
             margin-bottom: 20px;
@@ -129,9 +134,14 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         .progress-bar {{
             width: {progress_percentage}%;
             height: 100%;
-            background-color: #348558; /* Green color for the filled part */
-            opacity: 0.9; /* Make the filled portion a bit more opaque */
-            border-radius: 5px 0 0 5px; /* Rounded corners on the left */
+            background-color: #348558;
+            opacity: 0.9;
+            border-radius: 5px 0 0 5px;
+        }}
+        .navigation-buttons {{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
         }}
         </style>
         
@@ -143,28 +153,24 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons
-    col1, col2, col3 = st.columns([1, 1, 1])
-
-    with col1:
-        # Only show "Previous" button if not on the first question
-        if st.session_state.current_question > 0:
-            st.button("Previous", on_click=prev_question)
-
-    with col2:
-        # Show "Next" button if not on the last question
-        if st.session_state.current_question < len(questions) - 1:
-            st.button("Next", on_click=next_question)
-        # Show "Submit" button on the last question
-        elif st.session_state.current_question == len(questions) - 1:
-            st.button("Submit", on_click=submit_quiz)
+    # Navigation buttons (aligned with CSS flexbox)
+    st.markdown('<div class="navigation-buttons">', unsafe_allow_html=True)
+    if st.session_state.current_question > 0:
+        st.button("Previous", on_click=prev_question, key="prev_btn")
+    if st.session_state.current_question < len(questions) - 1:
+        st.button("Next", on_click=next_question, key="next_btn")
+    elif st.session_state.current_question == len(questions) - 1:
+        st.button("Submit", on_click=submit_quiz, key="submit_btn")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Expander to show bookmarked questions
     with st.expander("View Bookmarked Questions"):
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
-                st.write(f"Question {bookmark_index + 1}: {bookmarked_question}")
+                # Display clickable questions in the expander
+                if st.button(f"Go to Question {bookmark_index + 1}", key=f"bookmark_btn_{bookmark_index}"):
+                    go_to_question(bookmark_index)
         else:
             st.write("No questions bookmarked.")
 
