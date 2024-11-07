@@ -34,6 +34,7 @@ div[class*="st-key-bookmark_question_"] > div > button {
   border: none;
   padding: 0;
   cursor: pointer;
+  margin: auto;
 }
 
 div[class*="st-key-bookmark_question_"] > div > button > p {
