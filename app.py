@@ -57,24 +57,23 @@ def display_question(index):
 
     # Determine if there's a previously selected answer
     selected_option = st.session_state.user_answers[index]
-    
-    # Set index=None if no answer has been selected for a true unselected state
+
     if selected_option is None:
+        # Display the radio without specifying index for an unselected state
         user_answer = st.radio(
-            #"Choose an answer:", 
+            "Choose an answer:", 
             options=question["options"],
-            index=None,  # No option selected by default
             key=f"question_{index}"
         )
     else:
         # Display the radio with the previously selected answer as the default
         user_answer = st.radio(
-            #"Choose an answer:", 
+            "Choose an answer:", 
             options=question["options"],
             index=question["options"].index(selected_option),
             key=f"question_{index}"
         )
-    
+
     # Update the answer in session state
     if user_answer:
         st.session_state.user_answers[index] = user_answer
