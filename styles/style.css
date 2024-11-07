@@ -28,6 +28,14 @@ h1 {
   visibility: hidden;
 }
 
+div[class*="st-key-bookmark_question_"] > div > button {
+  display: inline;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer
+}
+
 .expander-content .question-container {
   display: flex;
   align-items: center;
