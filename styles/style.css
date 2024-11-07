@@ -9,6 +9,10 @@ body {
   background-color: #F7F0E6; /* Optional: background color for Streamlit container */
 }
 
+.appview-container {
+  border-width: 0;
+}
+
 h1 {
   color: #348558;
   font-family: 'Alegreya Sans', sans-serif;
