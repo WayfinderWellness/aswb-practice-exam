@@ -23,11 +23,11 @@ h1 {
 .current-question {
   font-size: 1.33em;
 }
-
+/*
 .stRadio > label {
   visibility: hidden;
 }
-
+*/
 .expander-content .question-container {
   display: flex;
   align-items: center;
