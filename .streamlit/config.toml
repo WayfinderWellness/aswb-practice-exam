@@ -1,0 +1,12 @@
+[theme]
+primaryColor = '#348558' # Customize primary color if desired
+secondaryBackgroundColor = '#F7F0E6' # Customize background color if desired
+
+[server]
+enableCORS = false
+
+[browser]
+gatherUsageStats = false  # Disables Streamlit usage tracking
+
+[global]
+hideStreamlitBanner = true  # This hides the "Made with Streamlit" banner
