@@ -94,11 +94,32 @@ def calculate_score():
 if 'quiz_completed' not in st.session_state or not st.session_state.quiz_completed:
     # Calculate progress
     total_questions = len(st.session_state.questions)
-    current_question = st.session_state.current_question + 1  # Current question is zero-indexed
-    progress_percentage = current_question / total_questions
+    current_question = st.session_state.current_question + 1
+    progress_percentage = current_question / total_questions * 100  # Convert to percentage
     
-    # Display progress bar at the top
-    st.progress(progress_percentage)
+    st.markdown(f"""
+        <style>
+        .progress-container {{
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* Faint background for remaining portion */
+            border: 1px solid rgba(0, 0, 0, 0.3);  /* Faint border for the entire progress bar */
+            border-radius: 5px;
+            height: 20px;
+            margin-bottom: 20px;
+        }}
+        .progress-bar {{
+            width: {progress_percentage}%;
+            height: 100%;
+            background-color: #4CAF50; /* Green color for the filled part */
+            opacity: 0.9; /* Make the filled portion a bit more opaque */
+            border-radius: 5px 0 0 5px; /* Rounded corners on the left */
+        }}
+        </style>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    """, unsafe_allow_html=True)
 
     # Display the current question
     display_question(st.session_state.current_question)
