@@ -172,8 +172,8 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
-                # Display the question text as a clickable button to go to that question
-                if st.button(f"Question {bookmark_index + 1}: {bookmarked_question}", key=f"bookmark_{bookmark_index}"):
+                # Display the question text as a clickable button with a unique key
+                if st.button(f"Question {bookmark_index + 1}: {bookmarked_question}", key=f"bookmark_{bookmark_index}_question"):
                     st.session_state.current_question = bookmark_index
         else:
             st.write("No questions bookmarked.")
