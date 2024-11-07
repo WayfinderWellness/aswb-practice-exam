@@ -149,7 +149,7 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     display_question(st.session_state.current_question)
 
     # Navigation buttons in two columns 
-    btn_col1, btn_col2 = st.columns(2, gap = "large")
+    btn_col1, btn_col2 = st.columns(2)
     with btn_col1:
         st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
     with btn_col2:
