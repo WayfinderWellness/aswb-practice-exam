@@ -39,6 +39,7 @@ div[class*="st-key-bookmark_question_"] > div > button {
 
 div[class*="st-key-bookmark_question_"] > div > button > p {
   text-align: left;
+  margin: auto;
 }
 
 .expander-content .question-container {
