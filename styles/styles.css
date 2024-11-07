@@ -14,6 +14,10 @@ h1 {
   font-family: 'Alegreya Sans', sans-serif;
 }
 
+label[for^="question_"] {
+  visibility: hidden;
+}
+
 .expander-content .question-container {
   display: flex;
   align-items: center;

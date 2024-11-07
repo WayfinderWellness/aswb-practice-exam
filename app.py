@@ -61,14 +61,14 @@ def display_question(index):
     if selected_option is None:
         # Display the radio without specifying index for an unselected state
         user_answer = st.radio(
-            #"Choose an answer:", 
+            "Choose an answer:", 
             options=question["options"],
             key=f"question_{index}"
         )
     else:
         # Display the radio with the previously selected answer as the default
         user_answer = st.radio(
-            #"Choose an answer:", 
+            "Choose an answer:", 
             options=question["options"],
             index=question["options"].index(selected_option),
             key=f"question_{index}"
