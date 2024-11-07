@@ -29,16 +29,12 @@ h1 {
 }
 
 div[class*="st-key-bookmark_question_"] > div > button {
-  display: inline;
+  display: inline-block;
+  text-align: left;
   background-color: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  margin: auto;
-}
-
-div[class*="st-key-bookmark_question_"] > div > button > p {
-  text-align: left;
   margin: auto;
 }
 
