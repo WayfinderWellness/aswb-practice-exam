@@ -141,7 +141,19 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         .navigation-buttons {{
             display: flex;
             justify-content: space-between;
+            width: 100%;
             margin-top: 20px;
+        }}
+        .left-button {{
+            margin-right: auto;
+        }}
+        .right-button {{
+            margin-left: auto;
+        }}
+        .bookmark-link {{
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
         }}
         </style>
         
@@ -153,12 +165,12 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons (aligned with CSS flexbox)
+    # Navigation buttons (aligned within the same container)
     st.markdown('<div class="navigation-buttons">', unsafe_allow_html=True)
     if st.session_state.current_question > 0:
-        st.button("Previous", on_click=prev_question, key="prev_btn")
+        st.button("Previous", on_click=prev_question, key="prev_btn", help="Previous question", args=None, kwargs=None)
     if st.session_state.current_question < len(questions) - 1:
-        st.button("Next", on_click=next_question, key="next_btn")
+        st.button("Next", on_click=next_question, key="next_btn", help="Next question", args=None, kwargs=None)
     elif st.session_state.current_question == len(questions) - 1:
         st.button("Submit", on_click=submit_quiz, key="submit_btn")
     st.markdown('</div>', unsafe_allow_html=True)
@@ -168,12 +180,14 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
-                # Display clickable questions in the expander
-                if st.button(f"Go to Question {bookmark_index + 1}", key=f"bookmark_btn_{bookmark_index}"):
-                    go_to_question(bookmark_index)
+                # Display clickable question text as a hyperlink in the expander
+                st.markdown(
+                    f'<a class="bookmark-link" href="#" onclick="window.location.reload(true);">{bookmarked_question}</a>',
+                    unsafe_allow_html=True,
+                )
         else:
             st.write("No questions bookmarked.")
-
+            
 else:
     # Display the score after submission
     st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
