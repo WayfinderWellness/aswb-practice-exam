@@ -61,7 +61,7 @@ def display_question(index):
     # Set index=None if no answer has been selected for a true unselected state
     if selected_option is None:
         user_answer = st.radio(
-            "Choose an answer:", 
+            #"Choose an answer:", 
             options=question["options"],
             index=None,  # No option selected by default
             key=f"question_{index}"
@@ -69,7 +69,7 @@ def display_question(index):
     else:
         # Display the radio with the previously selected answer as the default
         user_answer = st.radio(
-            "Choose an answer:", 
+            #"Choose an answer:", 
             options=question["options"],
             index=question["options"].index(selected_option),
             key=f"question_{index}"
@@ -117,10 +117,8 @@ else:
 
         # Choose emoji based on correctness
         result_icon = "✅" if is_correct else "❌"
-        #result_text = f"{result_icon} {'Correct' if is_correct else 'Incorrect'}"
 
         with st.expander(f"{result_icon} {i + 1}. {question['question']}"):
-            #st.write(result_text)
             st.write(f"**Your Answer:** {user_answer if user_answer else 'No answer selected'}")
             st.write(f"**Correct Answer:** {correct_answer}")
             st.write(f"**Explanation:** {question['explanation']}")
