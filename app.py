@@ -142,8 +142,9 @@ if not st.session_state.quiz_completed:
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
+                markdown_text = f"**Question {bookmark_index + 1}:** {bookmarked_question}"
                 st.button(
-                    f"Question {bookmark_index + 1}: {bookmarked_question}", 
+                    markdown_text, 
                     on_click = jump_to_bookmarked_question,
                     key = f"bookmark_question_{bookmark_index}", 
                     args = (bookmark_index,)
