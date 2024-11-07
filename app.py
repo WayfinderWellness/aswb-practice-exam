@@ -2,6 +2,13 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 
+# Define the scope for Google Sheets
+scope = ["https://www.googleapis.com/auth/spreadsheets"]
+
+# Test locally
+#SERVICE_ACCOUNT_FILE = 'secrets/aswb-practice-exam-91c673a5a3a7.json'
+#creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes = scope)
+
 # Load Google Sheets credentials from Streamlit secrets
 service_account_info = st.secrets["google_service_account"]
 creds = Credentials.from_service_account_info(service_account_info)
