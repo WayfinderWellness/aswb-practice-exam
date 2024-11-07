@@ -148,14 +148,15 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons in a single container  
-    #with st.container(): 
-    container = st.container(border = True)
-    container.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
-    if st.session_state.current_question < len(questions) - 1:
-        container.button("Next", on_click=next_question, key = "next_btn")
-    elif st.session_state.current_question == len(questions) - 1:
-        container.button("Submit", on_click = submit_quiz, key = "submit_btn")
+    # Navigation buttons in two columns 
+    btn_col1, btn_col2 = st.columns(2)
+    with btn_col1:
+        st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+    with btn_col2:
+        if st.session_state.current_question < len(questions) - 1:
+            st.button("Next", on_click=next_question, key = "next_btn")
+        elif st.session_state.current_question == len(questions) - 1:
+            st.button("Submit", on_click = submit_quiz, key = "submit_btn")
 
     # Expander to show bookmarked questions
     with st.expander("View Bookmarked Questions"):
