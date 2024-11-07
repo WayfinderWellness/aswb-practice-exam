@@ -92,6 +92,14 @@ def calculate_score():
 
 # Display the quiz questions if not yet submitted
 if 'quiz_completed' not in st.session_state or not st.session_state.quiz_completed:
+    # Calculate progress
+    total_questions = len(st.session_state.questions)
+    current_question = st.session_state.current_question + 1  # Current question is zero-indexed
+    progress_percentage = current_question / total_questions
+    
+    # Display progress bar at the top
+    st.progress(progress_percentage)
+
     # Display the current question
     display_question(st.session_state.current_question)
 
