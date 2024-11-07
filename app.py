@@ -2,9 +2,14 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 
-# Google Sheets setup
-SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"  # Replace with your actual Google Sheet ID
-SERVICE_ACCOUNT_FILE = "secrets/aswb-practice-exam-91c673a5a3a7.json"  # Replace with the path to your JSON file
+# Load Google Sheets credentials from Streamlit secrets
+service_account_info = st.secrets["google_service_account"]
+creds = Credentials.from_service_account_info(service_account_info)
+client = gspread.authorize(creds)
+
+# Specify your Google Sheets ID
+SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
+sheet = client.open_by_key(SHEET_ID).sheet1
 
 def load_questions_from_sheet():
     """Load questions and options from Google Sheet."""
