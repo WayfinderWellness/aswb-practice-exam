@@ -35,7 +35,7 @@ if 'questions' not in st.session_state:
 
     st.session_state.questions = load_questions_from_sheet()
     st.session_state.current_question = 0
-    st.session_state.user_answers = [None] * len(st.session_state.questions)
+    st.session_state.user_answers = [None] * len(st.session_state.questions)  # Initialize answers to None for each question
     st.session_state.score = None
 
 questions = st.session_state.questions
@@ -57,24 +57,19 @@ def display_question(index):
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
 
-    # Determine the initial selection based on stored answer
+    # Set index=None if no answer has been selected for a true unselected state
     selected_option = st.session_state.user_answers[index]
-
-    # If no answer is selected yet, do not set an initial index (appears unselected)
-    if selected_option is not None:
-        default_index = question["options"].index(selected_option)
-    else:
-        default_index = None
+    initial_index = question["options"].index(selected_option) if selected_option is not None else None
 
     # Display radio buttons without an initial selection if no answer is stored
     user_answer = st.radio(
         "Choose an answer:", 
         options=question["options"],
-        index=default_index if default_index is not None else 0,
+        index=initial_index if initial_index is not None else -1,  # Set index to -1 if no selection
         key=f"question_{index}"
     )
     
-    # Update the answer only if the user actually selects an option
+    # Update the answer in session state
     if user_answer:
         st.session_state.user_answers[index] = user_answer
 
