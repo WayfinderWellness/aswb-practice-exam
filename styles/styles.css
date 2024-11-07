@@ -1,7 +1,15 @@
 /* styles/styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap');
+
 body {
   background-color: #F7F0E6; /* Set to your desired background color */
 }
 .stApp {
   background-color: #F7F0E6; /* Optional: background color for Streamlit container */
+}
+
+h1 {
+  color: #348558;
+  font-family: 'Alegreya Sans', sans-serif;
 }
