@@ -57,17 +57,25 @@ def display_question(index):
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
 
-    # Set index=None if no answer has been selected for a true unselected state
+    # Determine if there's a previously selected answer
     selected_option = st.session_state.user_answers[index]
-    initial_index = question["options"].index(selected_option) if selected_option is not None else None
-
-    # Display radio buttons without an initial selection if no answer is stored
-    user_answer = st.radio(
-        "Choose an answer:", 
-        options=question["options"],
-        index=initial_index if initial_index is not None else -1,  # Set index to -1 if no selection
-        key=f"question_{index}"
-    )
+    
+    # Display the radio button options without setting an index if there's no selection
+    if selected_option is None:
+        # Display the radio with no default selection
+        user_answer = st.radio(
+            "Choose an answer:", 
+            options=question["options"],
+            key=f"question_{index}"
+        )
+    else:
+        # Display the radio with the previously selected answer as the default
+        user_answer = st.radio(
+            "Choose an answer:", 
+            options=question["options"],
+            index=question["options"].index(selected_option),
+            key=f"question_{index}"
+        )
     
     # Update the answer in session state
     if user_answer:
