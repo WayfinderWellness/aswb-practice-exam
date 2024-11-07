@@ -180,14 +180,15 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
-                # Display clickable question text as a hyperlink in the expander
+                # Display clickable question text with prefix "Question #"
                 st.markdown(
-                    f'<a class="bookmark-link" href="#" onclick="window.location.reload(true);">{bookmarked_question}</a>',
+                    f'<a class="bookmark-link" href="#" onclick="window.location.reload(true);">'
+                    f'Question {bookmark_index + 1}: {bookmarked_question}</a>',
                     unsafe_allow_html=True,
                 )
         else:
             st.write("No questions bookmarked.")
-            
+
 else:
     # Display the score after submission
     st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
