@@ -2,12 +2,14 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 
-# Read and apply CSS file
+# Read the CSS file
 with open("styles/style.css") as f:
     css = f.read()
+
+# Inject CSS into the Streamlit app
 st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
-# Google Sheets setup
+# Define the scope for Google Sheets and load Google Sheets credentials from Streamlit secrets
 scope = ["https://www.googleapis.com/auth/spreadsheets"]
 service_account_info = st.secrets["google_service_account"]
 creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
@@ -15,17 +17,19 @@ client = gspread.authorize(creds)
 SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
 sheet = client.open_by_key(SHEET_ID).sheet1
 
-# Load questions from Google Sheets once per session
+# Load questions from Google Sheets only once per session
 if 'questions' not in st.session_state:
-    def load_questions():
+    def load_questions_from_sheet():
+        """Load questions and options from Google Sheet."""
         data = sheet.get_all_records()
         questions = []
         for row in data:
             question = {
                 "question": row["question"],
                 "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
+                "category": row.get("category"),
                 "answer": row.get("answer"),
-                "explanation": row.get("explanation", "No explanation provided.")
+                "explanation": row.get("explanation", "No explanation provided.")  # Get explanation if available
             }
             questions.append(question)
         return questions
