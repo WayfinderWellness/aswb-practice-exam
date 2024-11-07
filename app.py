@@ -11,7 +11,7 @@ scope = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # Load Google Sheets credentials from Streamlit secrets
 service_account_info = st.secrets["google_service_account"]
-creds = Credentials.from_service_account_info(service_account_info)
+creds = Credentials.from_service_account_info(service_account_info, scopes = scope)
 client = gspread.authorize(creds)
 
 # Specify your Google Sheets ID and open the sheet
