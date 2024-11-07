@@ -28,20 +28,6 @@ h1 {
   visibility: hidden;
 }
 
-div:has(.st-key-prev_btn, .st-key-next_btn) {
-  position: relative;
-}
-
-.st-key-prev_btn {
-  position: absolute;
-  left: 0; 
-}
-
-.st-key-next_btn {
-    position: absolute;
-    right: 0; 
-}
-
 .expander-content .question-container {
   display: flex;
   align-items: center;
