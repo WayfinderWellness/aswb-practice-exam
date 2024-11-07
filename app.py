@@ -60,7 +60,7 @@ def submit_quiz():
 def display_question(index):
     """Display the question and answer choices for the current index."""
     question = questions[index]
-    st.markdown(f'<div id="current-question"><strong>Question {index + 1}:</strong> {question["question"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="current-question"><strong>Question {index + 1}:</strong> {question["question"]}</div>', unsafe_allow_html=True)
 
     # Determine if there's a previously selected answer
     selected_option = st.session_state.user_answers[index]
