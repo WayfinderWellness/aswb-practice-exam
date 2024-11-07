@@ -50,12 +50,17 @@ def display_question(index):
     """Display the question and answer choices for the current index."""
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
+    
+    # Set default index to 0 if the answer has not been chosen yet (None)
+    default_index = question["options"].index(st.session_state.user_answers[index]) if st.session_state.user_answers[index] in question["options"] else 0
+    
     selected_option = st.radio(
         "Choose an answer:", 
         options=question["options"],
-        index=st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else 0,
+        index=default_index,
         key=f"question_{index}"
     )
+    
     # Save the answer
     st.session_state.user_answers[index] = selected_option
 
