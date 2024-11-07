@@ -150,9 +150,8 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
 
     # Navigation buttons in a single container  
     with st.container(): 
-        if st.session_state.current_question > 0:
-            st.button("Previous", on_click=prev_question, key="prev_btn")
-        
+        st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+                
         with st.container():
             if st.session_state.current_question < len(questions) - 1:
                 st.button("Next", on_click=next_question, key="next_btn")
