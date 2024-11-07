@@ -57,28 +57,23 @@ def display_question(index):
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
 
-    # Determine if there's a previously selected answer
+    # Define a placeholder for the unselected state
+    options = ["Select an answer..."] + question["options"]
+
+    # Set the default index to 0 if no answer is selected, else find the existing answer
     selected_option = st.session_state.user_answers[index]
-    
-    # Display the radio button options without setting an index if there's no selection
-    if selected_option is None:
-        # Display the radio with no default selection
-        user_answer = st.radio(
-            "Choose an answer:", 
-            options=question["options"],
-            key=f"question_{index}"
-        )
-    else:
-        # Display the radio with the previously selected answer as the default
-        user_answer = st.radio(
-            "Choose an answer:", 
-            options=question["options"],
-            index=question["options"].index(selected_option),
-            key=f"question_{index}"
-        )
-    
-    # Update the answer in session state
-    if user_answer:
+    default_index = 0 if selected_option is None else options.index(selected_option)
+
+    # Display the radio button with the unselected placeholder
+    user_answer = st.radio(
+        "Choose an answer:", 
+        options=options,
+        index=default_index,
+        key=f"question_{index}"
+    )
+
+    # Only save the answer if it's not the placeholder
+    if user_answer != "Select an answer...":
         st.session_state.user_answers[index] = user_answer
 
 def calculate_score():
