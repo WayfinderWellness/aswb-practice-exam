@@ -56,19 +56,22 @@ def display_question(index):
     """Display the question and answer choices for the current index."""
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
+
+    # Use None for an unselected default if no answer is stored, else show saved answer
+    selected_option = st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else None
     
-    # Set default index if no answer is selected
-    default_index = question["options"].index(st.session_state.user_answers[index]) if st.session_state.user_answers[index] in question["options"] else 0
-    
-    selected_option = st.radio(
+    # Display radio buttons with no selection if no answer, else restore the selection
+    user_answer = st.radio(
         "Choose an answer:", 
-        options=question["options"],
-        index=default_index,
+        options=[None] + question["options"],  # Adding None as the first option
+        index=0 if selected_option is None else question["options"].index(selected_option) + 1,
+        format_func=lambda x: "" if x is None else x,  # Display empty text for None
         key=f"question_{index}"
     )
-    
-    # Save the answer
-    st.session_state.user_answers[index] = selected_option
+
+    # Save the selected answer, excluding the None placeholder
+    if user_answer is not None:
+        st.session_state.user_answers[index] = user_answer
 
 def calculate_score():
     """Calculate the score based on user answers if an 'answer' field exists in Google Sheet data."""
@@ -82,13 +85,17 @@ display_question(st.session_state.current_question)
 col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
-    st.button("Previous", on_click=prev_question)
+    # Only show "Previous" button if not on the first question
+    if st.session_state.current_question > 0:
+        st.button("Previous", on_click=prev_question)
 
 with col2:
-    st.button("Next", on_click=next_question)
-
-with col3:
-    st.button("Submit", on_click=submit_quiz)
+    # Show "Next" button if not on the last question
+    if st.session_state.current_question < len(questions) - 1:
+        st.button("Next", on_click=next_question)
+    # Show "Submit" button on the last question
+    elif st.session_state.current_question == len(questions) - 1:
+        st.button("Submit", on_click=submit_quiz)
 
 # Display the score after submission
 if st.session_state.score is not None:
