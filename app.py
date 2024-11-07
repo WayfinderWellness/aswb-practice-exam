@@ -117,10 +117,10 @@ else:
 
         # Choose emoji based on correctness
         result_icon = "✅" if is_correct else "❌"
-        result_text = f"{result_icon} {'Correct' if is_correct else 'Incorrect'}"
+        #result_text = f"{result_icon} {'Correct' if is_correct else 'Incorrect'}"
 
-        with st.expander(f"Question {i + 1}: {question['question']}"):
-            st.write(result_text)
+        with st.expander(f"{result_icon} {i + 1}. {question['question']}"):
+            #st.write(result_text)
             st.write(f"**Your Answer:** {user_answer if user_answer else 'No answer selected'}")
             st.write(f"**Correct Answer:** {correct_answer}")
             st.write(f"**Explanation:** {question['explanation']}")
