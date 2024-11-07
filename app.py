@@ -44,6 +44,18 @@ if 'questions' not in st.session_state:
 
 questions = st.session_state.questions
 
+# Initialize bookmarks in session state if not already present
+if 'bookmarks' not in st.session_state:
+    st.session_state.bookmarks = set()  # Use a set to avoid duplicates
+
+# Bookmark handling function
+def toggle_bookmark(question_index):
+    """Add or remove the question from bookmarks."""
+    if question_index in st.session_state.bookmarks:
+        st.session_state.bookmarks.remove(question_index)
+    else:
+        st.session_state.bookmarks.add(question_index)
+
 # Navigation functions to handle button clicks
 def next_question():
     if st.session_state.current_question < len(questions) - 1:
@@ -58,22 +70,28 @@ def submit_quiz():
     st.session_state.quiz_completed = True  # Set a flag to indicate the quiz is complete
 
 def display_question(index):
-    """Display the question and answer choices for the current index."""
+    """Display the question, answer choices, and bookmark icon."""
     question = questions[index]
+    
+    # Display question with a bookmark icon
+    bookmark_icon = "⭐" if index in st.session_state.bookmarks else "☆"
+    if st.button(f"{bookmark_icon} Bookmark", key=f"bookmark_{index}", on_click=toggle_bookmark, args=(index,)):
+        pass  # The button click updates the bookmark state
+
+    # Display question text with the current question number
     st.markdown(f'<div class="current-question"><strong>Question {index + 1}:</strong> {question["question"]}</div>', unsafe_allow_html=True)
 
     # Determine if there's a previously selected answer
     selected_option = st.session_state.user_answers[index]
 
+    # Display answer choices as a radio button, with or without a preselected option
     if selected_option is None:
-        # Display the radio without specifying index for an unselected state
         user_answer = st.radio(
             "Choose an answer:", 
             options=question["options"],
             key=f"question_{index}"
         )
     else:
-        # Display the radio with the previously selected answer as the default
         user_answer = st.radio(
             "Choose an answer:", 
             options=question["options"],
@@ -81,7 +99,7 @@ def display_question(index):
             key=f"question_{index}"
         )
 
-    # Update the answer in session state
+    # Update the answer in session state if user selects an answer
     if user_answer:
         st.session_state.user_answers[index] = user_answer
 
@@ -96,7 +114,8 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     total_questions = len(st.session_state.questions)
     current_question = st.session_state.current_question + 1
     progress_percentage = current_question / total_questions * 100  # Convert to percentage
-    
+
+    # Display progress bar at the top
     st.markdown(f"""
         <style>
         .progress-container {{
@@ -110,7 +129,7 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         .progress-bar {{
             width: {progress_percentage}%;
             height: 100%;
-            background-color: #4CAF50; /* Green color for the filled part */
+            background-color: #348558; /* Green color for the filled part */
             opacity: 0.9; /* Make the filled portion a bit more opaque */
             border-radius: 5px 0 0 5px; /* Rounded corners on the left */
         }}
@@ -139,6 +158,15 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         # Show "Submit" button on the last question
         elif st.session_state.current_question == len(questions) - 1:
             st.button("Submit", on_click=submit_quiz)
+
+    # Expander to show bookmarked questions
+    with st.expander("View Bookmarked Questions"):
+        if st.session_state.bookmarks:
+            for bookmark_index in sorted(st.session_state.bookmarks):
+                bookmarked_question = questions[bookmark_index]["question"]
+                st.write(f"Question {bookmark_index + 1}: {bookmarked_question}")
+        else:
+            st.write("No questions bookmarked.")
 
 else:
     # Display the score after submission
