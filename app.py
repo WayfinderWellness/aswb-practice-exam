@@ -9,14 +9,12 @@ client = gspread.authorize(creds)
 
 # Specify your Google Sheets ID
 SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
-sheet = client.open_by_key(SHEET_ID).sheet1
+sheet = client.open_by_key(SHEET_ID).questions
 
 def load_questions_from_sheet():
     """Load questions and options from Google Sheet."""
-    # Set up Google Sheets API
-    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE)
-    client = gspread.authorize(creds)
-    sheet = client.open_by_key(SHEET_ID).sheet1
+    # Use the authenticated client created at the beginning
+    sheet = client.open_by_key(SHEET_ID).questions
 
     # Fetch all data from the sheet
     data = sheet.get_all_records()
