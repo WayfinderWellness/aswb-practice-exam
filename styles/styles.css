@@ -13,3 +13,15 @@ h1 {
   color: #348558;
   font-family: 'Alegreya Sans', sans-serif;
 }
+
+.expander-content .question-container {
+  display: flex;
+  align-items: center;
+}
+.expander-content .question-icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+.expander-content .question-text {
+  text-indent: -1.2em; /* Aligns the question text with the question number */
+}
