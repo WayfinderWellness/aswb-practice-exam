@@ -2,6 +2,13 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 
+# Read the CSS file
+with open("styles/style.css") as f:
+    css = f.read()
+
+# Inject CSS into the Streamlit app
+st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+
 # Define the scope for Google Sheets
 scope = ["https://www.googleapis.com/auth/spreadsheets"]
 
