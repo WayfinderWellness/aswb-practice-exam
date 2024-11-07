@@ -138,12 +138,6 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
             opacity: 0.9;
             border-radius: 5px 0 0 5px;
         }}
-        .navigation-buttons {{
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-        }}
         </style>
         
         <div class="progress-container">
@@ -154,9 +148,7 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons in a single container
-    st.markdown('<div class="navigation-buttons">', unsafe_allow_html=True)
-    
+    # Navigation buttons in a single container   
     if st.session_state.current_question > 0:
         st.button("Previous", on_click=prev_question, key="prev_btn")
     
@@ -164,8 +156,6 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
         st.button("Next", on_click=next_question, key="next_btn")
     elif st.session_state.current_question == len(questions) - 1:
         st.button("Submit", on_click=submit_quiz, key="submit_btn")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
 
     # Expander to show bookmarked questions
     with st.expander("View Bookmarked Questions"):
