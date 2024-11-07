@@ -9,7 +9,7 @@ body {
   background-color: #F7F0E6; /* Optional: background color for Streamlit container */
 }
 
-.appview-container {
+body > div > div > div {
   border-width: 0;
 }
 
