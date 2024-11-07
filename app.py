@@ -18,40 +18,46 @@ client = gspread.authorize(creds)
 SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
 sheet = client.open_by_key(SHEET_ID).sheet1  # Open the first sheet directly
 
-def load_questions_from_sheet():
-    """Load questions and options from Google Sheet."""
-    # Fetch all data from the sheet
-    data = sheet.get_all_records()
-    questions = []
-    
-    # Parse data into the desired structure
-    for row in data:
-        question = {
-            "question": row["question"],
-            "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
-            "answer": row.get("answer")  # Optional: Add an "answer" column in Google Sheets if you want scoring
-        }
-        questions.append(question)
-    
-    return questions
+# Load questions from Google Sheets only once per session
+if 'questions' not in st.session_state:
+    def load_questions_from_sheet():
+        """Load questions and options from Google Sheet."""
+        data = sheet.get_all_records()
+        questions = []
+        for row in data:
+            question = {
+                "question": row["question"],
+                "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
+                "answer": row.get("answer")  # Optional: Add an "answer" column in Google Sheets if you want scoring
+            }
+            questions.append(question)
+        return questions
 
-# Load questions from the Google Sheet
-questions = load_questions_from_sheet()
-
-# Initialize session state variables for navigation
-if 'current_question' not in st.session_state:
+    st.session_state.questions = load_questions_from_sheet()
     st.session_state.current_question = 0
-if 'user_answers' not in st.session_state:
-    st.session_state.user_answers = [None] * len(questions)
-if 'score' not in st.session_state:
+    st.session_state.user_answers = [None] * len(st.session_state.questions)
     st.session_state.score = None
+
+questions = st.session_state.questions
+
+# Navigation functions to handle button clicks
+def next_question():
+    if st.session_state.current_question < len(questions) - 1:
+        st.session_state.current_question += 1
+
+def prev_question():
+    if st.session_state.current_question > 0:
+        st.session_state.current_question -= 1
+
+def submit_quiz():
+    st.session_state.score = calculate_score()
 
 def display_question(index):
     """Display the question and answer choices for the current index."""
     question = questions[index]
     st.write(f"**Question {index + 1}:** {question['question']}")
     
-    # Set default index to 0 if the answer has not been chosen yet (None)
+    # Set default index if no answer is selected
     default_index = question["options"].index(st.session_state.user_answers[index]) if st.session_state.user_answers[index] in question["options"] else 0
     
     selected_option = st.radio(
@@ -66,10 +72,7 @@ def display_question(index):
 
 def calculate_score():
     """Calculate the score based on user answers if an 'answer' field exists in Google Sheet data."""
-    score = 0
-    for i, user_answer in enumerate(st.session_state.user_answers):
-        if user_answer == questions[i].get("answer"):  # Check against correct answer if available
-            score += 1
+    score = sum(1 for i, answer in enumerate(st.session_state.user_answers) if answer == questions[i].get("answer"))
     return score
 
 # Display the current question
@@ -79,19 +82,14 @@ display_question(st.session_state.current_question)
 col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
-    if st.session_state.current_question > 0:
-        if st.button("Previous"):
-            st.session_state.current_question -= 1
+    st.button("Previous", on_click=prev_question)
 
 with col2:
-    if st.session_state.current_question < len(questions) - 1:
-        if st.button("Next"):
-            st.session_state.current_question += 1
+    st.button("Next", on_click=next_question)
 
 with col3:
-    if st.session_state.current_question == len(questions) - 1:
-        if st.button("Submit"):
-            # Calculate the score once all questions are answered
-            st.session_state.score = calculate_score()
-            st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
-            st.session_state.current_question = 0  # Reset to the first question
+    st.button("Submit", on_click=submit_quiz)
+
+# Display the score after submission
+if st.session_state.score is not None:
+    st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
