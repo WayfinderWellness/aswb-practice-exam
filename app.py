@@ -144,17 +144,6 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
             width: 100%;
             margin-top: 20px;
         }}
-        .left-button {{
-            align-self: flex-start;
-        }}
-        .right-button {{
-            align-self: flex-end;
-        }}
-        .bookmark-link {{
-            color: #0066cc;
-            text-decoration: underline;
-            cursor: pointer;
-        }}
         </style>
         
         <div class="progress-container">
@@ -165,25 +154,19 @@ if 'quiz_completed' not in st.session_state or not st.session_state.quiz_complet
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons in the same container with flex alignment
+    # Navigation buttons in a single container
     st.markdown('<div class="navigation-buttons">', unsafe_allow_html=True)
-    # Left-aligned "Previous" button
-    with st.container():
-        st.markdown('<div class="left-button">', unsafe_allow_html=True)
-        if st.session_state.current_question > 0:
-            st.button("Previous", on_click=prev_question, key="prev_btn")
-        st.markdown('</div>', unsafe_allow_html=True)
     
-    # Right-aligned "Next" or "Submit" button
-    with st.container():
-        st.markdown('<div class="right-button">', unsafe_allow_html=True)
-        if st.session_state.current_question < len(questions) - 1:
-            st.button("Next", on_click=next_question, key="next_btn")
-        elif st.session_state.current_question == len(questions) - 1:
-            st.button("Submit", on_click=submit_quiz, key="submit_btn")
-        st.markdown('</div>', unsafe_allow_html=True)
+    if st.session_state.current_question > 0:
+        st.button("Previous", on_click=prev_question, key="prev_btn")
+    
+    if st.session_state.current_question < len(questions) - 1:
+        st.button("Next", on_click=next_question, key="next_btn")
+    elif st.session_state.current_question == len(questions) - 1:
+        st.button("Submit", on_click=submit_quiz, key="submit_btn")
+    
     st.markdown('</div>', unsafe_allow_html=True)
-    
+
     # Expander to show bookmarked questions
     with st.expander("View Bookmarked Questions"):
         if st.session_state.bookmarks:
