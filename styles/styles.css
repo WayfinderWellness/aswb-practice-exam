@@ -1,0 +1,7 @@
+/* styles/styles.css */
+body {
+  background-color: #ffffff; /* Set to your desired background color */
+}
+.stApp {
+  background-color: #f0f2f6; /* Optional: background color for Streamlit container */
+}

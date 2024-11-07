@@ -1,5 +1,14 @@
 import streamlit as st
 
+# Load the external CSS file
+def load_css(file_path):
+    with open(file_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+# Apply the CSS file
+load_css("styles/styles.css")
+
+
 # Display a title for the app
 st.title("Enter Your Information")
 
