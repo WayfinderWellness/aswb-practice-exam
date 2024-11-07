@@ -39,6 +39,7 @@ if 'questions' not in st.session_state:
     st.session_state.score = None
     st.session_state.quiz_completed = False
     st.session_state.bookmarks = set()
+    st.session_state.rerun_trigger = False
 
 questions = st.session_state.questions
 
@@ -139,11 +140,20 @@ if not st.session_state.quiz_completed:
         if st.session_state.bookmarks:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
-                # Each button updates `current_question` to jump to a bookmarked question
+                # Each button updates `current_question` and sets rerun_trigger to True
                 if st.button(f"Question {bookmark_index + 1}: {bookmarked_question}", key=f"bookmark_question_{bookmark_index}"):
                     st.session_state.current_question = bookmark_index
+                    st.session_state.rerun_trigger = True  # Set rerun trigger to force update
         else:
             st.write("No questions bookmarked.")
+
+    # Check the rerun_trigger to refresh the question display
+    if st.session_state.rerun_trigger:
+        # Reset the rerun_trigger to allow future updates
+        st.session_state.rerun_trigger = False
+
+    # Display the current question based on the updated `st.session_state.current_question`
+    display_question(st.session_state.current_question)
 
 # Display score and feedback after submission
 else:
