@@ -17,26 +17,25 @@ client = gspread.authorize(creds)
 SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
 sheet = client.open_by_key(SHEET_ID).sheet1
 
-# Load questions from Google Sheets only once per session
-if 'questions' not in st.session_state:
-    def load_questions_from_sheet():
-        """Load questions and options from Google Sheet."""
-        data = sheet.get_all_records()
-        questions = []
-        for row in data:
-            question = {
-                "question": row["question"],
-                "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
-                "category": row.get("category"),
-                "answer": row.get("answer"),
-                "explanation": row.get("explanation", "No explanation provided.")  # Get explanation if available
-            }
-            questions.append(question)
-        return questions
+# Define function to load questions from Google Sheets
+def load_questions():
+    data = sheet.get_all_records()
+    questions = []
+    for row in data:
+        question = {
+            "question": row["question"],
+            "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
+            "answer": row.get("answer"),
+            "explanation": row.get("explanation", "No explanation provided.")
+        }
+        questions.append(question)
+    return questions
 
+# Initialize session state variables
+if 'questions' not in st.session_state:
     st.session_state.questions = load_questions()
     st.session_state.current_question = 0
-    st.session_state.user_answers = [None] * len(st.session_state.questions)  # Initialize answers to None
+    st.session_state.user_answers = [None] * len(st.session_state.questions)
     st.session_state.score = None
     st.session_state.quiz_completed = False
     st.session_state.bookmarks = set()
