@@ -15,7 +15,7 @@ h1 {
 }
 
 .stRadio > label {
-  visibility: hidden;
+  display: none !important;
 }
 
 .expander-content .question-container {
