@@ -152,11 +152,6 @@ if not st.session_state.quiz_completed:
         else:
             st.write("No questions bookmarked.")
 
-    # Check the rerun_trigger to refresh the question display
-    if st.session_state.rerun_trigger:
-        # Reset the rerun_trigger to allow future updates
-        st.session_state.rerun_trigger = False
-
 # Display score and feedback after submission
 else:
     st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
