@@ -18,8 +18,8 @@ h1 {
   font-family: 'Alegreya Sans', sans-serif;
 }
 
-.stElementContainer > div > div > p {
-  font-size: 1.0em;
+.current-question {
+  font-size: 1.33em;
 }
 
 .stRadio > label {
