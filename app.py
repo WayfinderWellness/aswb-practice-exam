@@ -1,5 +1,4 @@
-import tkinter as tk
-from tkinter import messagebox
+import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -23,7 +22,7 @@ def load_questions_from_sheet():
         question = {
             "question": row["question"],
             "options": [row["response1"], row["response2"], row["response3"], row["response4"]],
-            # Here we assume that no answer key is provided in the sheet for simplicity.
+            "answer": row.get("answer")  # Optional: Add an "answer" column in Google Sheets if you want scoring
         }
         questions.append(question)
     
@@ -32,83 +31,55 @@ def load_questions_from_sheet():
 # Load questions from the Google Sheet
 questions = load_questions_from_sheet()
 
-# Initialize quiz index and answers storage
-current_question = 0
-user_answers = [None] * len(questions)
+# Initialize session state variables for navigation
+if 'current_question' not in st.session_state:
+    st.session_state.current_question = 0
+if 'user_answers' not in st.session_state:
+    st.session_state.user_answers = [None] * len(questions)
+if 'score' not in st.session_state:
+    st.session_state.score = None
 
-# Setup main window
-root = tk.Tk()
-root.title("Quiz App")
-root.geometry("500x300")
+def display_question(index):
+    """Display the question and answer choices for the current index."""
+    question = questions[index]
+    st.write(f"**Question {index + 1}:** {question['question']}")
+    selected_option = st.radio(
+        "Choose an answer:", 
+        options=question["options"],
+        index=st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else 0,
+        key=f"question_{index}"
+    )
+    # Save the answer
+    st.session_state.user_answers[index] = selected_option
 
-# Variable to store user's selected answer
-selected_option = tk.StringVar()
+def calculate_score():
+    """Calculate the score based on user answers if an 'answer' field exists in Google Sheet data."""
+    score = 0
+    for i, user_answer in enumerate(st.session_state.user_answers):
+        if user_answer == questions[i].get("answer"):  # Check against correct answer if available
+            score += 1
+    return score
 
-def load_question():
-    """Load the current question and options."""
-    question = questions[current_question]
-    question_label.config(text=question["question"])
-    selected_option.set(user_answers[current_question])  # Set previous answer if it exists
-    for i, option in enumerate(question["options"]):
-        option_buttons[i].config(text=option, value=option)
+# Display the current question
+display_question(st.session_state.current_question)
 
-def next_question():
-    """Go to the next question."""
-    global current_question
-    save_answer()
-    if current_question < len(questions) - 1:
-        current_question += 1
-        load_question()
-    update_buttons()
+# Navigation buttons
+col1, col2, col3 = st.columns([1, 1, 1])
 
-def prev_question():
-    """Go to the previous question."""
-    global current_question
-    save_answer()
-    if current_question > 0:
-        current_question -= 1
-        load_question()
-    update_buttons()
+with col1:
+    if st.session_state.current_question > 0:
+        if st.button("Previous"):
+            st.session_state.current_question -= 1
 
-def save_answer():
-    """Save the user's answer for the current question."""
-    user_answers[current_question] = selected_option.get()
+with col2:
+    if st.session_state.current_question < len(questions) - 1:
+        if st.button("Next"):
+            st.session_state.current_question += 1
 
-def update_buttons():
-    """Enable or disable navigation buttons based on the question index."""
-    prev_button.config(state=tk.NORMAL if current_question > 0 else tk.DISABLED)
-    next_button.config(state=tk.NORMAL if current_question < len(questions) - 1 else tk.DISABLED)
-
-def submit():
-    """Show the user's answers and thank them for completing the quiz."""
-    save_answer()
-    # Display a message to show the user's responses, since no answer key is provided
-    messagebox.showinfo("Quiz Completed", "Thank you for completing the quiz!")
-
-# UI Elements
-question_label = tk.Label(root, text="", wraplength=400, font=("Arial", 14))
-question_label.pack(pady=20)
-
-option_buttons = [
-    tk.Radiobutton(root, text="", variable=selected_option, font=("Arial", 12))
-    for _ in range(4)
-]
-for button in option_buttons:
-    button.pack(anchor="w")
-
-# Navigation Buttons
-prev_button = tk.Button(root, text="Previous", command=prev_question)
-prev_button.pack(side=tk.LEFT, padx=20, pady=20)
-
-next_button = tk.Button(root, text="Next", command=next_question)
-next_button.pack(side=tk.LEFT, padx=20, pady=20)
-
-submit_button = tk.Button(root, text="Submit", command=submit)
-submit_button.pack(side=tk.RIGHT, padx=20, pady=20)
-
-# Initialize the first question
-load_question()
-update_buttons()
-
-# Start the application
-root.mainloop()
+with col3:
+    if st.session_state.current_question == len(questions) - 1:
+        if st.button("Submit"):
+            # Calculate the score once all questions are answered
+            st.session_state.score = calculate_score()
+            st.write(f"**Your Score:** {st.session_state.score}/{len(questions)}")
+            st.session_state.current_question = 0  # Reset to the first question
