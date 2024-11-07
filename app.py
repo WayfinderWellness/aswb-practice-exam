@@ -67,7 +67,7 @@ def display_question(index):
     
     # Bookmark icon
     bookmark_icon = "⭐" if index in st.session_state.bookmarks else "☆"
-    if st.button(f"{bookmark_icon} Bookmark", key=f"bookmark_{index}", on_click=toggle_bookmark, args=(index,)):
+    if st.button(f"{bookmark_icon} Bookmark", key=f"bookmark_toggle_{index}", on_click=toggle_bookmark, args=(index,)):
         pass  # The button click updates the bookmark state
 
     # Display question text and options
@@ -80,7 +80,7 @@ def display_question(index):
         "Choose an answer:", 
         options=question["options"],
         index=None if selected_option is None else question["options"].index(selected_option),
-        key=f"question_{index}"
+        key=f"question_option_{index}"
     )
 
     # Update selected answer in session state
@@ -140,13 +140,10 @@ if not st.session_state.quiz_completed:
             for bookmark_index in sorted(st.session_state.bookmarks):
                 bookmarked_question = questions[bookmark_index]["question"]
                 # Each button updates `current_question` to jump to a bookmarked question
-                if st.button(f"Question {bookmark_index + 1}: {bookmarked_question}", key=f"bookmark_{bookmark_index}_question"):
+                if st.button(f"Question {bookmark_index + 1}: {bookmarked_question}", key=f"bookmark_question_{bookmark_index}"):
                     st.session_state.current_question = bookmark_index
         else:
             st.write("No questions bookmarked.")
-
-    # Display the current question based on the updated `st.session_state.current_question`
-    display_question(st.session_state.current_question)
 
 # Display score and feedback after submission
 else:
