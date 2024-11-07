@@ -34,7 +34,7 @@ div[class*="st-key-bookmark_question_"] > div > button {
   border: none;
   padding: 0;
   cursor: pointer;
-  text-align: left;
+  justify-content: left;
 }
 
 .expander-content .question-container {
