@@ -50,13 +50,13 @@ def toggle_pin(question_index):
         st.session_state.pins.add(question_index)
 
 # Navigation functions
-def prev_question():
-    if st.session_state.current_question > 0:
-        st.session_state.current_question -= 1
-
 def next_question():
     if st.session_state.current_question < len(questions) - 1:
         st.session_state.current_question += 1
+
+def prev_question():
+    if st.session_state.current_question > 0:
+        st.session_state.current_question -= 1
 
 def jump_to_pined_question(pin_index):
     st.session_state.current_question = pin_index
@@ -68,9 +68,9 @@ def submit_quiz():
 def display_question(index):
     question = questions[index]
     
-    # pin icon
-    pin_icon = "📌" if index in st.session_state.pins else "☆"
-    if st.button(f"{pin_icon} Pin & Skip", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
+    # Pin icon
+    pin_icon = "⭐" if index in st.session_state.pins else "☆"
+    if st.button(f"{pin_icon} pin", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
         pass  # The button click updates the pin state
 
     # Display question text and options
@@ -137,7 +137,7 @@ if not st.session_state.quiz_completed:
         elif st.session_state.current_question == len(questions) - 1:
             st.button("Submit", on_click=submit_quiz, key="submit_btn")
 
-    # Pin expander with clickable question links
+    # pin expander with clickable question links
     with st.expander("View pined Questions"):
         if st.session_state.pins:
             for pin_index in sorted(st.session_state.pins):
