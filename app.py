@@ -170,7 +170,7 @@ if not st.session_state.quiz_completed:
                 jump_to_pinned_question(pin_index)
 
         with col2:
-            st.write(f"{pinned_question} \\(Current Response: {current_answer}\\)")
+            st.write(f"{pinned_question} \\(**Current Response:** {current_answer}\\)")
 
 # Display score and feedback after submission
 else:
