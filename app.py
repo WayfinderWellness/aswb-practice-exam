@@ -173,6 +173,8 @@ if not st.session_state.quiz_completed:
     btn_col1, btn_col2 = st.columns([1, 1])
     with btn_col1:
         st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+
+    with btn_col2:
         if st.session_state.user_answers[st.session_state.current_question] is not None:
             if st.session_state.current_question < len(questions) - 1:
                 st.button("Next Question →", on_click=next_question, key="next_btn")
