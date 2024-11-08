@@ -168,14 +168,8 @@ if not st.session_state.quiz_completed:
         col1, col2 = st.columns([9, 3])
 
         with col1:
-            st.markdown(
-                f"""
-                <a href="#" onclick="window.location.href=window.location.href + '#';" class="pin_question_{pin_index + 1}">
-                    <strong>Question {pin_index + 1}:</strong> {pinned_question}
-                </a>
-                """,
-                unsafe_allow_html=True
-            )
+            if st.button(f"{pinned_question}", key=f"pin_question_{pin_index + 1}"):
+                jump_to_pinned_question(pin_index)
 
         with col2:
             selected_answer = st.selectbox(
