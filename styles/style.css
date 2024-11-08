@@ -97,6 +97,10 @@ div[class*="pin_response_"] {
   padding-top: 0.5em;
 }
 
+div[class*="pin_question_"] > div > button {
+  display: inline-block !important;
+}
+
 .question-link {
   color: #0066cc;
   text-decoration: none;
