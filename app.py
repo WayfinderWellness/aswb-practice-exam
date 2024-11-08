@@ -170,18 +170,7 @@ if not st.session_state.quiz_completed:
                 jump_to_pinned_question(pin_index)
 
         with col2:
-            st.write(f"{pinned_question}")
-            st.write(f"**Current Response:** {current_answer}")
-            #st.markdown(f"""
-            #    <div class="pinned_question_container">
-            #        <div class="pinned_question">
-            #            <span class="pinned_question_label">Question {pin_index + 1}:</span> {pinned_question}
-            #        </div>
-            #        <div class="pinned_response">
-            #            <strong>Current Response:</strong> {current_answer}
-            #        </div>
-            #    </div>
-            #    """, unsafe_allow_html=True)
+            st.write(f"{pinned_question} \\(Current Response: {current_answer}\\)")
 
 # Display score and feedback after submission
 else:
