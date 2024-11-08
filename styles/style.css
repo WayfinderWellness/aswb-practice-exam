@@ -42,6 +42,16 @@ div[class*="st-key-pin_question_"] > div > button {
   flex-direction: row !important;
 }
 
+.stHorizontalBlock {
+  display: flex;
+  display: block;
+}
+
+.stHorizontalBlock > .stColumn:nth-child(3) > div {
+  margin-left: auto;
+
+}
+
 /*
 .expander-content .question-container {
   display: flex;

@@ -110,11 +110,9 @@ def render_nav_btns(index):
 
     with btn_col3:
         if st.session_state.current_question < len(questions) - 1:
-            st.button("Next Question →", on_click=next_question, key="next_btn",
-                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))
+            st.button("Next Question →", on_click=next_question, key="next_btn")
         else:
-            st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn", 
-                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))    
+            st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")    
 
 def calculate_score():
     return sum(1 for i, answer in enumerate(st.session_state.user_answers) if answer == questions[i].get("answer"))
