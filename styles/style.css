@@ -59,12 +59,7 @@ h1 {
 }
 
 #pinned-question-header-col1 {
-  width: calc(100% / 12 * 8);
-}
-
-#pinned-question-header-col2 {
-  width: calc(100% / 12 * 4);
-  text-align: center;
+  width: calc(100% / 12 * 12);
 }
 
 /*
@@ -80,9 +75,12 @@ h1 {
 }
 */
 
-div[class*="pin_question_"], 
-div[class*="pin_response_"] {
+div[class*="pin_question_"] {
   padding-top: 0.5em;
+}
+
+div[class*="pin_response_"] {
+  font-style: italic;
 }
 
 div[class*="pin_question_"] > div > button {

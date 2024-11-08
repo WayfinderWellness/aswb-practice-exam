@@ -152,8 +152,7 @@ if not st.session_state.quiz_completed:
         st.markdown(
             """
             <div class="table-header-row">
-                <div class="table-header-cell" id="pinned-question-header-col1">Question</div>
-                <div class="table-header-cell" id="pinned-question-header-col2">Your Answer</div>
+                <div class="table-header-cell" id="pinned-question-header-col1">Pinned Questions</div>
             </div>
             """, unsafe_allow_html = True
         )
@@ -167,17 +166,20 @@ if not st.session_state.quiz_completed:
         # create container with two rows for each pin: question and answer
         with st.container():
             # Display the question as a hyperlink to the question
-            if st.button(f"Q{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
+            if st.button(f"**Question {pin_index + 1}:** {pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
             # Display dropdown of the selected response
-            selected_answer = st.radio(
-                "Selected answer",  # Hidden label
-                options=options,
-                index=options.index(current_answer) if current_answer in options else 0,
-                key=f"pin_response_{pin_index + 1}",
-                label_visibility="collapsed"
-            )
+            selected_answer_text = current_answer if current_answer else "None"
+            st.write(f"**Your answer:** {selected_answer_text}")
+            
+            #selected_answer = st.radio(
+            #    "Selected answer",  # Hidden label
+            #    options=options,
+            #    index=options.index(current_answer) if current_answer in options else 0,
+            #    key=f"pin_response_{pin_index + 1}",
+            #    label_visibility="collapsed"
+            #)
 
         # Create three columns for each row
         #col1, col2 = st.columns([8, 4])
