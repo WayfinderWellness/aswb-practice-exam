@@ -67,6 +67,10 @@ div[class*="jump_to_question"] {
   margin-right: auto;
 }
 
+div[class*="jump_to_question"] > div > button {
+  font-size: 0.9em;
+}
+
 /*
 .row {
   padding: 8px;
