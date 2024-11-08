@@ -105,7 +105,7 @@ def render_nav_btns(index):
 
     with btn_col2:
         pin_icon = "⭐" if index in st.session_state.pins else "☆"
-        if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,))
+        if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
             pass 
 
     with btn_col3:
