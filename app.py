@@ -172,46 +172,45 @@ if not st.session_state.quiz_completed:
 
     render_nav_btns(st.session_state.current_question) 
 
-    # Header row for pinned questions
-    st.markdown(
-        '<div class="header-row">'
-        '<div class="cell">#</div>'
-        '<div class="cell">Question</div>'
-        '<div class="cell">Your Answer</div>'
-        '</div>',
-        unsafe_allow_html=True
-    )         
+    # Header row using three columns for "#", "Question", and "Your Answer"
+    col1, col2, col3 = st.columns([1, 4, 3])
+    with col1:
+        st.markdown('<div class="header">#</div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="header">Question</div>', unsafe_allow_html=True)
+    with col3:
+        st.markdown('<div class="header">Your Answer</div>', unsafe_allow_html=True)
 
-    # Loop over pinned questions to create a new row for each
+    # Loop over pinned questions to display each question in a new row
     for pin_index in sorted(st.session_state.pins):
         pinned_question = questions[pin_index]["question"]
         options = [""] + questions[pin_index]["options"]
         current_answer = get_user_answer(pin_index)
 
-        # Display the row for the current pinned question
-        st.markdown(
-            f'<div class="row">'
-            f'<div class="cell">{pin_index + 1}</div>'
-            f'<div class="cell"><a href="#" class="question-link" onclick="window.location.reload();">{pinned_question}</a></div>'
-            f'<div class="cell">',
-            unsafe_allow_html=True
-        )
+        # Create three columns for each row
+        col1, col2, col3 = st.columns([1, 4, 3])
 
-        # Render dropdown for "Your Answer" selection
-        selected_answer = st.selectbox(
-            "Select your answer",  # Hidden label
-            options=options,
-            index=options.index(current_answer) if current_answer in options else 0,
-            key=f"user_answer_{pin_index}",
-            label_visibility="collapsed"
-        )
+        with col1:
+            st.write(pin_index + 1)  # Display question number
 
-        # Close row div
-        st.markdown('</div></div>', unsafe_allow_html=True)
+        with col2:
+            # Create a clickable question link that will jump to the question
+            if st.button(f"Q{pin_index + 1}: {pinned_question}", key=f"question_link_{pin_index}"):
+                jump_to_pinned_question(pin_index)
 
-        # Update the session state with the selected answer
-        if selected_answer:
-            st.session_state.user_answers[pin_index] = selected_answer
+        with col3:
+            # Dropdown to select the answer
+            selected_answer = st.selectbox(
+                "",  # Hidden label
+                options=options,
+                index=options.index(current_answer) if current_answer in options else 0,
+                key=f"user_answer_{pin_index}",
+                label_visibility="collapsed"
+            )
+
+            # Update session state with the selected answer
+            if selected_answer:
+                st.session_state.user_answers[pin_index] = selected_answer
 
 # Display score and feedback after submission
 else:
