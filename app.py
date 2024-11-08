@@ -128,6 +128,17 @@ if not st.session_state.quiz_completed:
             opacity: 0.9;
             border-radius: 5px 0 0 5px;
         }}
+
+        thead th {{
+            background-color: #348558;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+        }}
+        
+        tbody td {{
+            text-align: left;
+        }}
         </style>
         
         <div class="progress-container">
@@ -159,7 +170,7 @@ if not st.session_state.quiz_completed:
             question_link = f'<a href="#" onclick="window.location.reload();" style="text-decoration: none; color: #0066cc;"><strong>Question {pin_index + 1}:</strong> {pinned_question}</a>'
             
             table_data.append({
-                "Question Number": pin_index + 1,
+                "#": pin_index + 1,
                 "Question": question_link, 
                 "Selected Answer": get_user_answer(pin_index)
             })
