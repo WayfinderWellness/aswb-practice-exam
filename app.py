@@ -152,21 +152,25 @@ if not st.session_state.quiz_completed:
 
     # Display pinned questions in a table format
     if st.session_state.pins:
-        # Prepare data for the table
-        table_data = [
-            {
-                "#": pin_index + 1,
-                "Question": questions[pin_index]["question"],
+        table_data = []
+        for pin_index in sorted(st.session_state.pins):
+            pinned_question = questions[pin_index]["question"]
+            
+            question_link = f'<a href="#" onclick="window.location.reload();" style="text-decoration: none; color: #0066cc;"><strong>Question {pin_index + 1}:</strong> {pinned_question}</a>'
+            
+            table_data.append({
+                "Question Number": pin_index + 1,
+                "Question": question_link, 
                 "Selected Answer": get_user_answer(pin_index)
-            }
-            for pin_index in sorted(st.session_state.pins)
-        ]
+            })
 
-        # Convert to DataFrame for display
         pinned_questions_df = pd.DataFrame(table_data)
 
-        # Display the table
-        st.table(pinned_questions_df)
+        st.markdown(pinned_questions_df.to_html(escape=False, index=False), unsafe_allow_html=True)
+
+        for pin_index in sorted(st.session_state.pins):
+            if st.session_state.current_question == pin_index:
+                jump_to_pinned_question(pin_index)
     else:
         st.write("No questions pinned.")
 
