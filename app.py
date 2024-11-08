@@ -172,7 +172,7 @@ if not st.session_state.quiz_completed:
                 jump_to_pinned_question(pin_index)
 
         with col2:
-            selected_answer = st.selectbox(
+            selected_answer = st.radio(
                 "Selected answer",  # Hidden label
                 options=options,
                 index=options.index(current_answer) if current_answer in options else 0,
