@@ -69,15 +69,10 @@ div[class*="st-key-pin_question_"] > div > button {
 }
 
 #pinned-question-header-col1 {
-  width: calc(100% / 12 * 1);
-  text-align: center;
+  width: calc(100% / 12 * 9);
 }
 
 #pinned-question-header-col2 {
-  width: calc(100% / 12 * 8);
-}
-
-#pinned-question-header-col3 {
   width: calc(100% / 12 * 3);
   text-align: center;
 }

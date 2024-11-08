@@ -152,9 +152,8 @@ if not st.session_state.quiz_completed:
         st.markdown(
             """
             <div class="table-header-row">
-                <div class="table-header-cell" id="pinned-question-header-col1">#</div>
-                <div class="table-header-cell" id="pinned-question-header-col2">Question</div>
-                <div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>
+                <div class="table-header-cell" id="pinned-question-header-col1">Question</div>
+                <div class="table-header-cell" id="pinned-question-header-col2">Your Answer</div>
             </div>
             """, unsafe_allow_html = True
         )
@@ -166,16 +165,13 @@ if not st.session_state.quiz_completed:
         current_answer = get_user_answer(pin_index)
 
         # Create three columns for each row
-        col1, col2, col3 = st.columns([1, 8, 3])
+        col1, col2 = st.columns([9, 3])
 
         with col1:
-            st.markdown(f"""<div class="pin_index_{pin_index + 1}">{pin_index + 1}</div>""",unsafe_allow_html=True)
-
-        with col2:
-            if st.button(f"{pinned_question}", key=f"pin_question_{pin_index + 1}"):
+            if st.button(f"<strong>Question {pin_index + 1}:</strong> {pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
-        with col3:
+        with col2:
             selected_answer = st.selectbox(
                 "Selected answer",  # Hidden label
                 options=options,
