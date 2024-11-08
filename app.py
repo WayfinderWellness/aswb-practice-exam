@@ -144,6 +144,15 @@ if not st.session_state.quiz_completed:
                 display: flex;
                 justify-content: space-between;
             }}
+            #pinned-question-header-col1 {{
+                width: calc(100% / 12 * 1);
+            }}
+            #pinned-question-header-col2 {{
+                width: calc(100% / 12 * 8);
+            }}
+            #pinned-question-header-col3 {{
+                width: calc(100% / 12 * 3);
+            }}
             .row {{
                 padding: 8px;
                 border-bottom: 1px solid #ddd;
@@ -173,13 +182,14 @@ if not st.session_state.quiz_completed:
     render_nav_btns(st.session_state.current_question) 
 
     # Header row using three columns for "#", "Question", and "Your Answer"
-    col1, col2, col3 = st.columns([1, 8, 3], gap = "small", vertical_alignment = "center")
-    with col1:
-        st.markdown('<div class="table-header-row">#</div>', unsafe_allow_html=True)
-    with col2:
-        st.markdown('<div class="table-header-row">Question</div>', unsafe_allow_html=True)
-    with col3:
-        st.markdown('<div class="table-header-row">Your Answer</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="table-header-row">'
+            '<div class="table-header-cell" id="pinned-question-header-col1">#</div>',
+            '<div class="table-header-cell" id="pinned-question-header-col2">Question</div>',
+            '<div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>',
+        '</div>',
+        unsafe_allow_html = True
+    )
 
     # Loop over pinned questions to display each question in a new row
     for pin_index in sorted(st.session_state.pins):
