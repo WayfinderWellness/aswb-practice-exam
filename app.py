@@ -163,11 +163,12 @@ if not st.session_state.quiz_completed:
         options = [""] + questions[pin_index]["options"]
         current_answer = get_user_answer(pin_index) or "None"
 
-        col1, col2 = st.columns([2, 10], vertical_align = "center")
+        col1, col2 = st.columns([2, 10], vertical_alignment = "center")
 
         with col1:
-            if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
-                jump_to_pinned_question(pin_index)
+            st.container():
+                if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
+                    jump_to_pinned_question(pin_index)
 
         with col2:
             st.markdown(f"""
