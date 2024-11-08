@@ -135,29 +135,30 @@ if not st.session_state.quiz_completed:
                 opacity: 0.9;
                 border-radius: 5px 0 0 5px;
             }}
-
-            thead th {{
+            .header-row {{
                 background-color: #348558;
                 color: white;
                 font-weight: bold;
-                text-align: left;
+                padding: 8px;
+                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
             }}
-            
-            tbody td {{
-                text-align: left;
+            .row {{
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+                display: flex;
+                justify-content: space-between;
             }}
-
-            tbody td a {{
-                color: #0066cc; /* Default link color */
+            .cell {{
+                flex: 1;
+            }}
+            .question-link {{
+                color: #0066cc;
                 text-decoration: none;
             }}
-
-            tbody td a:hover {{
-                color: #348558; /* Hover color matches header background */
-            }}
-
-            table th:nth-child(3), table td:nth-child(3) {{
-                width: 25%;
+            .question-link:hover {{
+                color: #348558;
             }}
         </style>
         
@@ -169,39 +170,48 @@ if not st.session_state.quiz_completed:
     # Display the current question
     display_question(st.session_state.current_question)
 
-    render_nav_btns(st.session_state.current_question)          
+    render_nav_btns(st.session_state.current_question) 
 
-    # Display pinned questions in table format with dropdown for answers
-    if st.session_state.pins:
-        table_data = []
-        for pin_index in sorted(st.session_state.pins):
-            pinned_question = questions[pin_index]["question"]
-            options = [""] + questions[pin_index]["options"]
-            current_answer = get_user_answer(pin_index)
+    # Header row for pinned questions
+    st.markdown(
+        '<div class="header-row">'
+        '<div class="cell">#</div>'
+        '<div class="cell">Question</div>'
+        '<div class="cell">Your Answer</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )         
 
-            question_link = f'<a href="#" onclick="window.location.reload();" style="text-decoration: none; color: #0066cc;">{pinned_question}</a>'
+    # Loop over pinned questions to create a new row for each
+    for pin_index in sorted(st.session_state.pins):
+        pinned_question = questions[pin_index]["question"]
+        options = [""] + questions[pin_index]["options"]
+        current_answer = get_user_answer(pin_index)
 
-            # Add row to the data list
-            table_data.append({
-                "#": pin_index + 1,
-                "Question": question_link,
-                "Your Answer": st.selectbox(
-                    "Answer selection",
-                    options=options,
-                    index=options.index(current_answer) if current_answer in options else 0,
-                    key=f"user_answer_{pin_index}",
-                    label_visibility= "collapsed"
-                )
-            })
+        # Display the row for the current pinned question
+        st.markdown(
+            f'<div class="row">'
+            f'<div class="cell">{pin_index + 1}</div>'
+            f'<div class="cell"><a href="#" class="question-link" onclick="window.location.reload();">{pinned_question}</a></div>'
+            f'<div class="cell">',
+            unsafe_allow_html=True
+        )
 
-        # Convert to a DataFrame and render as HTML with custom style
-        pinned_questions_df = pd.DataFrame(table_data)
-        st.markdown(pinned_questions_df.to_html(escape=False, index=False), unsafe_allow_html=True)
+        # Render dropdown for "Your Answer" selection
+        selected_answer = st.selectbox(
+            "Select your answer",  # Hidden label
+            options=options,
+            index=options.index(current_answer) if current_answer in options else 0,
+            key=f"user_answer_{pin_index}",
+            label_visibility="collapsed"
+        )
 
-        # Check if the user wants to jump to a pinned question
-        for pin_index in sorted(st.session_state.pins):
-            if st.session_state.current_question == pin_index:
-                jump_to_pinned_question(pin_index)
+        # Close row div
+        st.markdown('</div></div>', unsafe_allow_html=True)
+
+        # Update the session state with the selected answer
+        if selected_answer:
+            st.session_state.user_answers[pin_index] = selected_answer
 
 # Display score and feedback after submission
 else:
