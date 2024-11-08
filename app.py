@@ -195,7 +195,7 @@ if not st.session_state.quiz_completed:
 
         with col2:
             # Create a clickable question link that will jump to the question
-            if st.button(f"Q{pin_index + 1}: {pinned_question}", key=f"question_link_{pin_index}"):
+            if st.button(f"Q{pin_index + 1}: {pinned_question}", key=f"pin_question_{pin_index}"):
                 jump_to_pinned_question(pin_index)
 
         with col3:
