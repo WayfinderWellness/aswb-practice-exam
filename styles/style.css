@@ -101,18 +101,10 @@ h1 {
   color: #696969;
 }
 
-/*
-div[class*="pin_question_"] > div > button {
-  display: inline-block !important;
+.pinned_question_label {
+  font-weight: 600;
+  color: #348558;
 }
-*/
-
-/*
-.question-link {
-  color: #0066cc;
-  text-decoration: none;
-}
-*/
 
 .pinned_question:hover {
   color: #348558;
