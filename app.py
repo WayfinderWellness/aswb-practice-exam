@@ -1,6 +1,7 @@
 import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
+import pandas as pd
 
 # Read the CSS file
 with open("styles/style.css") as f:
@@ -41,6 +42,10 @@ if 'questions' not in st.session_state:
     st.session_state.pins = set()
 
 questions = st.session_state.questions
+
+# Function to get the user's selected answer or return an empty string if not answered
+def get_user_answer(index):
+    return st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else ""
 
 # pin toggle function
 def toggle_pin(question_index):
@@ -145,21 +150,25 @@ if not st.session_state.quiz_completed:
         else:
             st.button("Pin & Skip", on_click=pin_and_skip, key="pin_and_skip_btn")
 
-    # pin expander with clickable question links
-    with st.expander("View Pinned Questions"):
-        if st.session_state.pins:
-            for pin_index in sorted(st.session_state.pins):
-                pinned_question = questions[pin_index]["question"]
-                markdown_text = f"**Question {pin_index + 1}:** {pinned_question}"
-                st.button(
-                    markdown_text, 
-                    on_click = jump_to_pinned_question,
-                    key = f"pin_question_{pin_index}", 
-                    args = (pin_index,)
-                )
+    # Display pinned questions in a table format
+    if st.session_state.pins:
+        # Prepare data for the table
+        table_data = [
+            {
+                "#": pin_index + 1,
+                "Question": questions[pin_index]["question"],
+                "Selected Answer": get_user_answer(pin_index)
+            }
+            for pin_index in sorted(st.session_state.pins)
+        ]
 
-        else:
-            st.write("No questions pinned.")
+        # Convert to DataFrame for display
+        pinned_questions_df = pd.DataFrame(table_data)
+
+        # Display the table
+        st.table(pinned_questions_df)
+    else:
+        st.write("No questions pinned.")
 
 # Display score and feedback after submission
 else:
