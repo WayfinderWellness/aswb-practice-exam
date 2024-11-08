@@ -164,11 +164,11 @@ if not st.session_state.quiz_completed:
         current_answer = get_user_answer(pin_index)
 
         st.markdown(f"""
-            <div style="padding-top: 0.5em; padding-bottom: 0.5em;">
-                <button onclick="window.location.href='#{pin_index}'" style="all: unset; color: #0066cc; cursor: pointer; font-weight: bold;">
+            <div class="pinned_question_container">
+                <button class="pinned_question" onclick="window.location.href='#{pin_index}'">
                     Question {pin_index + 1}: {pinned_question}
                 </button>
-                <div style="margin-left: 0.25em; font-size: 0.9em; margin-top: -0.25em;">
+                <div class="pinned_response">
                     <strong>Your Response:</strong> {current_answer}
                 </div>
             </div>
