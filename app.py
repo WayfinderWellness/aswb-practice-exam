@@ -80,10 +80,9 @@ def submit_quiz():
 def display_question(index):
     question = questions[index]
     
-    # Pin icon
-    pin_icon = "⭐" if index in st.session_state.pins else "☆"
-    if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
-        pass  # The button click updates the pin state
+    #pin_icon = "⭐" if index in st.session_state.pins else "☆"
+    #if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
+    #    pass  # The button click updates the pin state
 
     # Display question text and options
     st.markdown(f'<div class="current-question"><strong>Question {index + 1}:</strong> {question["question"]}</div>', unsafe_allow_html=True)
@@ -101,6 +100,29 @@ def display_question(index):
     # Update selected answer in session state
     if user_answer:
         st.session_state.user_answers[index] = user_answer
+
+def render_nav_btns(index):
+    btn_col1, btn_col2, btn_col3 = st.columns([2, 1, 1])
+
+    with btn_col1:
+        st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+
+    with btn_col2:
+        pin_icon = "⭐" if index in st.session_state.pins else "☆"
+        if st.session_state.current_question < len(questions) - 1:
+            st.button(f"{pin_icon} Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
+            pass
+        else:
+            st.button(f"{pin_icon} Pin & Skip Question", on_click=pin_and_skip, key="pin_and_skip_btn") 
+            pass 
+
+    with btn_col3:
+        if st.session_state.current_question < len(questions) - 1:
+            st.button("Next Question →", on_click=next_question, key="next_btn",
+                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))
+        else:
+            st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn", 
+                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))    
 
 def calculate_score():
     return sum(1 for i, answer in enumerate(st.session_state.user_answers) if answer == questions[i].get("answer"))
@@ -170,24 +192,7 @@ if not st.session_state.quiz_completed:
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons
-    btn_col1, btn_col2, btn_col3 = st.columns([2, 1, 1])
-    with btn_col1:
-        st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
-
-    with btn_col2:
-        if st.session_state.current_question < len(questions) - 1:
-            st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
-        else:
-            st.button("Pin Question", on_click=pin_and_skip, key="pin_and_skip_btn")  
-
-    with btn_col3:
-        if st.session_state.current_question < len(questions) - 1:
-            st.button("Next Question →", on_click=next_question, key="next_btn",
-                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))
-        else:
-            st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn", 
-                      disabled = (st.session_state.user_answers[st.session_state.current_question] is None))              
+    render_nav_btns(st.session_state.current_question)          
 
     # Display pinned questions in a table format
     if st.session_state.pins:
