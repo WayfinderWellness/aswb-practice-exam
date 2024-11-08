@@ -112,6 +112,11 @@ if not st.session_state.quiz_completed:
 
     # Progress bar
     st.markdown(f"""
+        <script>
+            document.querySelectorAll('.st-key-prev_btn').forEach((child) => {{
+                child.parentElement.classList.add('has-prev-btn');
+            }});
+        </script>
         <style>
         .progress-container {{
             width: 100%;
