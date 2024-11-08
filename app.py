@@ -170,7 +170,7 @@ if not st.session_state.quiz_completed:
     display_question(st.session_state.current_question)
 
     # Navigation buttons
-    btn_col1, btn_col2 = st.columns(2)
+    btn_col1, btn_col2 = st.columns([1, 1])
     with btn_col1:
         st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
         if st.session_state.user_answers[st.session_state.current_question] is not None:
