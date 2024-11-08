@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_elements import elements, mu, mui
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
@@ -169,19 +170,36 @@ if not st.session_state.quiz_completed:
     # Display the current question
     display_question(st.session_state.current_question)
 
-    # Navigation buttons
-    btn_col1, btn_col2 = st.columns([1, 1])
-    with btn_col1:
-        st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+    # Create a container with Material UI Box components to control alignment
+    with elements("navigation_buttons"):
+        with mui.Box(display="flex", justifyContent="space-between", width="100%"):
+            # Left-aligned Previous button
+            with mui.Box(sx={"flexGrow": 1}):
+                st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
 
-    with btn_col2:
-        if st.session_state.user_answers[st.session_state.current_question] is not None:
-            if st.session_state.current_question < len(questions) - 1:
-                st.button("Next Question →", on_click=next_question, key="next_btn")
-            elif st.session_state.current_question == len(questions) - 1:
-                st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
-        else:
-            st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
+            # Right-aligned Next or Submit button
+            with mui.Box(sx={"flexGrow": 0, "textAlign": "right"}):
+                if st.session_state.user_answers[st.session_state.current_question] is not None:
+                    if st.session_state.current_question < len(questions) - 1:
+                        st.button("Next Question →", on_click=next_question, key="next_btn")
+                    elif st.session_state.current_question == len(questions) - 1:
+                        st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
+                else:
+                    st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
+
+    # Navigation buttons
+    #btn_col1, btn_col2 = st.columns([1, 1])
+    #with btn_col1:
+    #    st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+
+    #with btn_col2:
+    #    if st.session_state.user_answers[st.session_state.current_question] is not None:
+    #        if st.session_state.current_question < len(questions) - 1:
+    #            st.button("Next Question →", on_click=next_question, key="next_btn")
+    #        elif st.session_state.current_question == len(questions) - 1:
+    #            st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
+    #    else:
+    #        st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
 
     # Display pinned questions in a table format
     if st.session_state.pins:
