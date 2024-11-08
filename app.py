@@ -164,14 +164,13 @@ if not st.session_state.quiz_completed:
         options = [""] + questions[pin_index]["options"]
         current_answer = get_user_answer(pin_index)
 
-        # Create three columns for each row
-        col1, col2 = st.columns([8, 4])
-
-        with col1:
+        # create container with two rows for each pin: question and answer
+        with st.container():
+            # Display the question as a hyperlink to the question
             if st.button(f"Q{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
-        with col2:
+            # Display dropdown of the selected response
             selected_answer = st.radio(
                 "Selected answer",  # Hidden label
                 options=options,
@@ -179,6 +178,22 @@ if not st.session_state.quiz_completed:
                 key=f"pin_response_{pin_index + 1}",
                 label_visibility="collapsed"
             )
+
+        # Create three columns for each row
+        #col1, col2 = st.columns([8, 4])
+
+        #with col1:
+        #    if st.button(f"Q{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
+        #        jump_to_pinned_question(pin_index)
+
+        #with col2:
+        #    selected_answer = st.radio(
+        #        "Selected answer",  # Hidden label
+        #        options=options,
+        #        index=options.index(current_answer) if current_answer in options else 0,
+        #        key=f"pin_response_{pin_index + 1}",
+        #        label_visibility="collapsed"
+        #    )
 
             # Update session state with the selected answer
             if selected_answer:
