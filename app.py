@@ -183,12 +183,13 @@ if not st.session_state.quiz_completed:
 
     # Header row using three columns for "#", "Question", and "Your Answer"
     st.markdown(
-        '<div class="table-header-row">'
-            '<div class="table-header-cell" id="pinned-question-header-col1">#</div>',
-            '<div class="table-header-cell" id="pinned-question-header-col2">Question</div>',
-            '<div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>',
-        '</div>',
-        unsafe_allow_html = True
+        """
+        <div class="table-header-row">
+            <div class="table-header-cell" id="pinned-question-header-col1">#</div>
+            <div class="table-header-cell" id="pinned-question-header-col2">Question</div>
+            <div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>
+        </div>
+        """, unsafe_allow_html = True
     )
 
     # Loop over pinned questions to display each question in a new row
