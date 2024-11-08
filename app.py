@@ -170,9 +170,7 @@ if not st.session_state.quiz_completed:
         with col1:
             st.markdown(
                 f"""
-                <a href="#" onclick="window.location.href=window.location.href + '#';" 
-                style="display: inline-block; padding: 0.5rem 1rem; background-color: #348558; color: white; 
-                font-weight: bold; border-radius: 5px; text-decoration: none;">
+                <a href="#" onclick="window.location.href=window.location.href + '#';" class="pin_question_{pin_index + 1}">
                     Question {pin_index + 1}: {pinned_question}
                 </a>
                 """,
