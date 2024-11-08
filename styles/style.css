@@ -44,12 +44,11 @@ div[class*="st-key-pin_question_"] > div > button {
 
 .stHorizontalBlock {
   display: flex;
-  display: block;
 }
 
 .stHorizontalBlock > .stColumn:nth-child(3) > div {
   margin-left: auto;
-
+  display: block;
 }
 
 /*
