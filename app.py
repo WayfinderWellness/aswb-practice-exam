@@ -171,14 +171,14 @@ if not st.session_state.quiz_completed:
     display_question(st.session_state.current_question)
 
     # Create a container with Material UI Box components to control alignment
-    with elements("navigation_buttons"):
-        with mui.Box(display="flex", justifyContent="space-between", width="100%"):
-            # Left-aligned Previous button
+    #with elements("navigation_buttons"):
+    with elements("styled_mui_sx"):
+        with mui.Box(sx = { "display": "flex", "justifyContent": "space-between", "width": "100%" }):
             with mui.Box(sx={"flexGrow": 1}):
                 st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
 
             # Right-aligned Next or Submit button
-            with mui.Box(sx={"flexGrow": 0, "textAlign": "right"}):
+            with mui.Box(sx = { "flexGrow": 0, "textAlign": "right" }):
                 if st.session_state.user_answers[st.session_state.current_question] is not None:
                     if st.session_state.current_question < len(questions) - 1:
                         st.button("Next Question →", on_click=next_question, key="next_btn")
