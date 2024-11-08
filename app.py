@@ -173,7 +173,7 @@ if not st.session_state.quiz_completed:
     render_nav_btns(st.session_state.current_question) 
 
     # Header row using three columns for "#", "Question", and "Your Answer"
-    col1, col2, col3 = st.columns([1, 8, 3])
+    col1, col2, col3 = st.columns([1, 8, 3], gap = "small", vertical_alignment = "center")
     with col1:
         st.markdown('<div class="table-header-row">#</div>', unsafe_allow_html=True)
     with col2:
