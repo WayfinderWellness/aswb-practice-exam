@@ -168,7 +168,7 @@ if not st.session_state.quiz_completed:
         col1, col2 = st.columns([8, 4])
 
         with col1:
-            if st.button(f"{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
+            if st.button(f"Q{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
         with col2:
