@@ -148,15 +148,16 @@ if not st.session_state.quiz_completed:
     render_nav_btns(st.session_state.current_question) 
 
     # Header row using three columns for "#", "Question", and "Your Answer"
-    st.markdown(
-        """
-        <div class="table-header-row">
-            <div class="table-header-cell" id="pinned-question-header-col1">#</div>
-            <div class="table-header-cell" id="pinned-question-header-col2">Question</div>
-            <div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>
-        </div>
-        """, unsafe_allow_html = True
-    )
+    if len(st.session_state.pins) > 0:
+        st.markdown(
+            """
+            <div class="table-header-row">
+                <div class="table-header-cell" id="pinned-question-header-col1">#</div>
+                <div class="table-header-cell" id="pinned-question-header-col2">Question</div>
+                <div class="table-header-cell" id="pinned-question-header-col3">Your Answer</div>
+            </div>
+            """, unsafe_allow_html = True
+        )
 
     # Loop over pinned questions to display each question in a new row
     for pin_index in sorted(st.session_state.pins):
