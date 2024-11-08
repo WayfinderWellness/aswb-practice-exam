@@ -166,9 +166,8 @@ if not st.session_state.quiz_completed:
         col1, col2 = st.columns([2, 10], vertical_alignment = "center")
 
         with col1:
-            st.container():
-                if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
-                    jump_to_pinned_question(pin_index)
+            if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
+                jump_to_pinned_question(pin_index)
 
         with col2:
             st.markdown(f"""
