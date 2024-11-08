@@ -169,7 +169,7 @@ if not st.session_state.quiz_completed:
                     <strong>Question {pin_index + 1}:</strong> {pinned_question}
                 </button>
                 <div class="pinned_response">
-                    <strong>Your Response:</strong> {current_answer}
+                    <strong>Current Response:</strong> {current_answer}
                 </div>
             </div>
             """, unsafe_allow_html=True)
