@@ -161,9 +161,9 @@ if not st.session_state.quiz_completed:
     for pin_index in sorted(st.session_state.pins):
         pinned_question = questions[pin_index]["question"]
         options = [""] + questions[pin_index]["options"]
-        current_answer = current_answer if current_answer else "None"
+        current_answer = get_user_answer(pin_index) or "None"
 
-        col1, col2 = st.columns([8, 4])
+        col1, col2 = st.columns([2, 10])
 
         with col1:
             if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
@@ -172,9 +172,9 @@ if not st.session_state.quiz_completed:
         with col2:
             st.markdown(f"""
                 <div class="pinned_question_container">
-                    <button class="pinned_question" onclick="window.location.href='#{pin_index}'">
+                    <div class="pinned_question">
                         <span class="pinned_question_label">Question {pin_index + 1}:</span> {pinned_question}
-                    </button>
+                    </div>
                     <div class="pinned_response">
                         <strong>Current Response:</strong> {current_answer}
                     </div>
