@@ -166,7 +166,7 @@ if not st.session_state.quiz_completed:
         st.markdown(f"""
             <div class="pinned_question_container">
                 <button class="pinned_question" onclick="window.location.href='#{pin_index}'">
-                    Question {pin_index + 1}: {pinned_question}
+                    <strong>Question {pin_index + 1}:</strong> {pinned_question}
                 </button>
                 <div class="pinned_response">
                     <strong>Your Response:</strong> {current_answer}
