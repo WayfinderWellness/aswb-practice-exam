@@ -165,10 +165,10 @@ if not st.session_state.quiz_completed:
         current_answer = get_user_answer(pin_index)
 
         # Create three columns for each row
-        col1, col2 = st.columns([9, 3])
+        col1, col2 = st.columns([8, 4])
 
         with col1:
-            if st.button(f"1\\) {pinned_question}", key=f"pin_question_{pin_index + 1}"):
+            if st.button(f"\\(1\\) {pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
         with col2:

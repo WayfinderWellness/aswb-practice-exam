@@ -59,11 +59,11 @@ h1 {
 }
 
 #pinned-question-header-col1 {
-  width: calc(100% / 12 * 9);
+  width: calc(100% / 12 * 8);
 }
 
 #pinned-question-header-col2 {
-  width: calc(100% / 12 * 3);
+  width: calc(100% / 12 * 4);
   text-align: center;
 }
 
@@ -80,7 +80,6 @@ h1 {
 }
 */
 
-div[class*="pin_index_"], 
 div[class*="pin_question_"], 
 div[class*="pin_response_"] {
   padding-top: 0.5em;
