@@ -135,7 +135,7 @@ if not st.session_state.quiz_completed:
                 opacity: 0.9;
                 border-radius: 5px 0 0 5px;
             }}
-            .header-row {{
+            .table-header-row {{
                 background-color: #348558;
                 color: white;
                 font-weight: bold;
@@ -173,13 +173,13 @@ if not st.session_state.quiz_completed:
     render_nav_btns(st.session_state.current_question) 
 
     # Header row using three columns for "#", "Question", and "Your Answer"
-    col1, col2, col3 = st.columns([1, 4, 3])
+    col1, col2, col3 = st.columns([1, 8, 3])
     with col1:
-        st.markdown('<div class="header">#</div>', unsafe_allow_html=True)
+        st.markdown('<div class="table-header-row">#</div>', unsafe_allow_html=True)
     with col2:
-        st.markdown('<div class="header">Question</div>', unsafe_allow_html=True)
+        st.markdown('<div class="table-header-row">Question</div>', unsafe_allow_html=True)
     with col3:
-        st.markdown('<div class="header">Your Answer</div>', unsafe_allow_html=True)
+        st.markdown('<div class="table-header-row">Your Answer</div>', unsafe_allow_html=True)
 
     # Loop over pinned questions to display each question in a new row
     for pin_index in sorted(st.session_state.pins):
@@ -201,7 +201,7 @@ if not st.session_state.quiz_completed:
         with col3:
             # Dropdown to select the answer
             selected_answer = st.selectbox(
-                "",  # Hidden label
+                "Selected answer",  # Hidden label
                 options=options,
                 index=options.index(current_answer) if current_answer in options else 0,
                 key=f"user_answer_{pin_index}",
