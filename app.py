@@ -129,13 +129,6 @@ if not st.session_state.quiz_completed:
             border-radius: 5px 0 0 5px;
         }}
 
-        .button-row-container {{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 10px;
-        }}
-
         thead th {{
             background-color: #348558;
             color: white;
@@ -166,27 +159,16 @@ if not st.session_state.quiz_completed:
     display_question(st.session_state.current_question)
 
     # Navigation buttons
-    with st.container():
-        st.markdown('<div class="button-row-container">', unsafe_allow_html=True)
-        
-        # Previous button
-        if st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0)):
-            pass
-        
-        # Conditionally display Next, Submit, or Pin & Skip button
+    btn_col1, btn_col2 = st.columns(2)
+    with btn_col1:
+        st.button("← Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
         if st.session_state.user_answers[st.session_state.current_question] is not None:
             if st.session_state.current_question < len(questions) - 1:
-                if st.button("Next", on_click=next_question, key="next_btn"):
-                    pass
+                st.button("Next →", on_click=next_question, key="next_btn")
             elif st.session_state.current_question == len(questions) - 1:
-                if st.button("Submit", on_click=submit_quiz, key="submit_btn"):
-                    pass
+                st.button("Submit ✓", on_click=submit_quiz, key="submit_btn")
         else:
-            if st.button("Pin & Skip", on_click=pin_and_skip, key="pin_and_skip_btn"):
-                pass
-        
-        # Close the custom container
-        st.markdown('</div>', unsafe_allow_html=True)
+            st.button("Pin & Skip →", on_click=pin_and_skip, key="pin_and_skip_btn")
 
     # Display pinned questions in a table format
     if st.session_state.pins:
