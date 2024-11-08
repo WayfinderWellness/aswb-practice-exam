@@ -161,60 +161,25 @@ if not st.session_state.quiz_completed:
     for pin_index in sorted(st.session_state.pins):
         pinned_question = questions[pin_index]["question"]
         options = [""] + questions[pin_index]["options"]
-        current_answer = get_user_answer(pin_index)
+        current_answer = current_answer if current_answer else "None"
 
-        st.markdown(f"""
-            <div class="pinned_question_container">
-                <button class="pinned_question" onclick="window.location.href='#{pin_index}'">
-                    <span class="pinned_question_label">Question {pin_index + 1}:</span> {pinned_question}
-                </button>
-                <div class="pinned_response">
-                    <strong>Current Response:</strong> {current_answer}
+        col1, col2 = st.columns([8, 4])
+
+        with col1:
+            if st.button(f"Question {pin_index + 1}", key=f"jump_to_question_{pin_index}"):
+                jump_to_pinned_question(pin_index)
+
+        with col2:
+            st.markdown(f"""
+                <div class="pinned_question_container">
+                    <button class="pinned_question" onclick="window.location.href='#{pin_index}'">
+                        <span class="pinned_question_label">Question {pin_index + 1}:</span> {pinned_question}
+                    </button>
+                    <div class="pinned_response">
+                        <strong>Current Response:</strong> {current_answer}
+                    </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # create container with two rows for each pin: question and answer
-        #with st.container():
-            # Display the question as a hyperlink to the question
-        #    if st.button(f"**Question {pin_index + 1}:** {pinned_question}", key=f"pin_question_{pin_index + 1}"):
-        #        jump_to_pinned_question(pin_index)
-
-            # Display dropdown of the selected response
-        #    selected_answer_text = current_answer if current_answer else "None"
-        #    st.markdown(f"""
-        #                <div style="margin-left: 0.25em; font-size: 0.9em;">
-        #                <strong>Your Response:</strong> {selected_answer_text}
-        #                </div>
-        #                """, unsafe_allow_html=True)
-            
-            #selected_answer = st.radio(
-            #    "Selected answer",  # Hidden label
-            #    options=options,
-            #    index=options.index(current_answer) if current_answer in options else 0,
-            #    key=f"pin_response_{pin_index + 1}",
-            #    label_visibility="collapsed"
-            #)
-
-        # Create three columns for each row
-        #col1, col2 = st.columns([8, 4])
-
-        #with col1:
-        #    if st.button(f"Q{pin_index + 1}. {pinned_question}", key=f"pin_question_{pin_index + 1}"):
-        #        jump_to_pinned_question(pin_index)
-
-        #with col2:
-        #    selected_answer = st.radio(
-        #        "Selected answer",  # Hidden label
-        #        options=options,
-        #        index=options.index(current_answer) if current_answer in options else 0,
-        #        key=f"pin_response_{pin_index + 1}",
-        #        label_visibility="collapsed"
-        #    )
-
-            # Update session state with the selected answer
-        #    if selected_answer:
-        #        st.session_state.user_answers[pin_index] = selected_answer
+                """, unsafe_allow_html=True)
 
 # Display score and feedback after submission
 else:
