@@ -1,3 +1,3 @@
 gspread
 google-auth
-streamlit_elements
+#streamlit_elements
