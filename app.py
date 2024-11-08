@@ -112,47 +112,53 @@ if not st.session_state.quiz_completed:
 
     # Progress bar
     st.markdown(f"""
-        <script>
-            document.querySelectorAll('.st-key-prev_btn').forEach((child) => {{
-                child.parentElement.classList.add('has-prev-btn');
-            }});
-        </script>
         <style>
-        .progress-container {{
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            height: 20px;
-            margin-bottom: 20px;
-        }}
-        .progress-bar {{
-            width: {progress_percentage}%;
-            height: 100%;
-            background-color: #348558;
-            opacity: 0.9;
-            border-radius: 5px 0 0 5px;
-        }}
+            .progress-container {{
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(0, 0, 0, 0.3);
+                border-radius: 5px;
+                height: 20px;
+                margin-bottom: 20px;
+            }}
+            .progress-bar {{
+                width: {progress_percentage}%;
+                height: 100%;
+                background-color: #348558;
+                opacity: 0.9;
+                border-radius: 5px 0 0 5px;
+            }}
 
-        thead th {{
-            background-color: #348558;
-            color: white;
-            font-weight: bold;
-            text-align: left;
-        }}
-        
-        tbody td {{
-            text-align: left;
-        }}
+            thead th {{
+                background-color: #348558;
+                color: white;
+                font-weight: bold;
+                text-align: left;
+            }}
+            
+            tbody td {{
+                text-align: left;
+            }}
 
-        tbody td a {{
-            color: #0066cc; /* Default link color */
-            text-decoration: none;
-        }}
+            tbody td a {{
+                color: #0066cc; /* Default link color */
+                text-decoration: none;
+            }}
 
-        tbody td a:hover {{
-            color: #348558; /* Hover color matches header background */
-        }}
+            tbody td a:hover {{
+                color: #348558; /* Hover color matches header background */
+            }}
+
+            div.stButton > button {{
+                margin-right: 1rem; /* Spacing between buttons */
+            }}
+
+            .stButtonContainer {{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 1rem;
+            }}
         </style>
         
         <div class="progress-container">
@@ -164,16 +170,24 @@ if not st.session_state.quiz_completed:
     display_question(st.session_state.current_question)
 
     # Navigation buttons
-    btn_col1, btn_col2 = st.columns(2)
-    with btn_col1:
-        st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
-        if st.session_state.user_answers[st.session_state.current_question] is not None:
-            if st.session_state.current_question < len(questions) - 1:
-                st.button("Next Question →", on_click=next_question, key="next_btn")
-            elif st.session_state.current_question == len(questions) - 1:
-                st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
-        else:
-            st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
+    def render_buttons():
+        with st.container():
+            # Previous button
+            if st.button("← Previous Question", on_click=prev_question, key="prev_btn",
+                        disabled=(st.session_state.current_question == 0)):
+                pass
+
+            # Conditionally display the Next/Submit/Skip buttons
+            if st.session_state.user_answers[st.session_state.current_question] is not None:
+                if st.session_state.current_question < len(questions) - 1:
+                    st.button("Next Question →", on_click=next_question, key="next_btn")
+                elif st.session_state.current_question == len(questions) - 1:
+                    st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
+            else:
+                st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
+
+    # Call the function to render the buttons
+    render_buttons()
 
     # Display pinned questions in a table format
     if st.session_state.pins:
