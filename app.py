@@ -129,6 +129,13 @@ if not st.session_state.quiz_completed:
             border-radius: 5px 0 0 5px;
         }}
 
+        .button-row-container {{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;
+        }}
+
         thead th {{
             background-color: #348558;
             color: white;
@@ -159,16 +166,27 @@ if not st.session_state.quiz_completed:
     display_question(st.session_state.current_question)
 
     # Navigation buttons
-    btn_col1, btn_col2 = st.columns(2)
-    with btn_col1:
-        st.button("← Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+    with st.container():
+        st.markdown('<div class="button-row-container">', unsafe_allow_html=True)
+        
+        # Previous button
+        if st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0)):
+            pass
+        
+        # Conditionally display Next, Submit, or Pin & Skip button
         if st.session_state.user_answers[st.session_state.current_question] is not None:
             if st.session_state.current_question < len(questions) - 1:
-                st.button("Next →", on_click=next_question, key="next_btn")
+                if st.button("Next", on_click=next_question, key="next_btn"):
+                    pass
             elif st.session_state.current_question == len(questions) - 1:
-                st.button("Submit ✓", on_click=submit_quiz, key="submit_btn")
+                if st.button("Submit", on_click=submit_quiz, key="submit_btn"):
+                    pass
         else:
-            st.button("Pin & Skip →", on_click=pin_and_skip, key="pin_and_skip_btn")
+            if st.button("Pin & Skip", on_click=pin_and_skip, key="pin_and_skip_btn"):
+                pass
+        
+        # Close the custom container
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # Display pinned questions in a table format
     if st.session_state.pins:
@@ -191,8 +209,6 @@ if not st.session_state.quiz_completed:
         for pin_index in sorted(st.session_state.pins):
             if st.session_state.current_question == pin_index:
                 jump_to_pinned_question(pin_index)
-    else:
-        st.write("No questions pinned.")
 
 # Display score and feedback after submission
 else:
