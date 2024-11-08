@@ -62,6 +62,11 @@ h1 {
   width: calc(100% / 12 * 12);
 }
 
+div[class*="jump_to_question"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /*
 .row {
   padding: 8px;
@@ -74,41 +79,6 @@ h1 {
   flex: 1;
 }
 */
-
-.pinned_question_container {
-  padding-top: 0.5em; 
-  padding-bottom: 0.5em;
-}
-
-.pinned_question {
-/*div[class*="pin_question_"] {*/
-  padding-top: 0.5em;
-}
-
-.pinned_question {
-/*div[class*="pin_question_"] > div > button {*/
-  display: inline-block;
-  margin: auto;
-  padding: 0;
-  text-align: left;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.pinned_response {
-  font-size: 0.9em;
-  color: #696969;
-}
-
-.pinned_question_label {
-  font-weight: 600;
-  color: #348558;
-}
-
-.pinned_question:hover {
-  color: #348558;
-}
 
 /*
 .expander-content .question-container {
