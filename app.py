@@ -58,7 +58,7 @@ def prev_question():
     if st.session_state.current_question > 0:
         st.session_state.current_question -= 1
 
-def jump_to_pined_question(pin_index):
+def jump_to_pinned_question(pin_index):
     st.session_state.current_question = pin_index
 
 def submit_quiz():
@@ -70,7 +70,7 @@ def display_question(index):
     
     # Pin icon
     pin_icon = "⭐" if index in st.session_state.pins else "☆"
-    if st.button(f"{pin_icon} pin", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
+    if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
         pass  # The button click updates the pin state
 
     # Display question text and options
@@ -138,20 +138,20 @@ if not st.session_state.quiz_completed:
             st.button("Submit", on_click=submit_quiz, key="submit_btn")
 
     # pin expander with clickable question links
-    with st.expander("View pined Questions"):
+    with st.expander("View Pinned Questions"):
         if st.session_state.pins:
             for pin_index in sorted(st.session_state.pins):
-                pined_question = questions[pin_index]["question"]
-                markdown_text = f"**Question {pin_index + 1}:** {pined_question}"
+                pinned_question = questions[pin_index]["question"]
+                markdown_text = f"**Question {pin_index + 1}:** {pinned_question}"
                 st.button(
                     markdown_text, 
-                    on_click = jump_to_pined_question,
+                    on_click = jump_to_pinned_question,
                     key = f"pin_question_{pin_index}", 
                     args = (pin_index,)
                 )
 
         else:
-            st.write("No questions pined.")
+            st.write("No questions pinned.")
 
 # Display score and feedback after submission
 else:
