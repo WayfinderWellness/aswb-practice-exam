@@ -58,6 +58,12 @@ def prev_question():
     if st.session_state.current_question > 0:
         st.session_state.current_question -= 1
 
+def pin_and_skip():
+    current_index = st.session_state.current_question
+    st.session_state.pins.add(current_index)
+    if current_index < len(questions) - 1:
+        st.session_state.current_question += 1
+
 def jump_to_pinned_question(pin_index):
     st.session_state.current_question = pin_index
 
@@ -131,11 +137,13 @@ if not st.session_state.quiz_completed:
     btn_col1, btn_col2 = st.columns(2)
     with btn_col1:
         st.button("Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
-    with btn_col2:
-        if st.session_state.current_question < len(questions) - 1:
-            st.button("Next", on_click=next_question, key="next_btn")
-        elif st.session_state.current_question == len(questions) - 1:
-            st.button("Submit", on_click=submit_quiz, key="submit_btn")
+        if st.session_state.user_answers[st.session_state.current_question] is not None:
+            if st.session_state.current_question < len(questions) - 1:
+                st.button("Next", on_click=next_question, key="next_btn")
+            elif st.session_state.current_question == len(questions) - 1:
+                st.button("Submit", on_click=submit_quiz, key="submit_btn")
+        else:
+            st.button("Pin & Skip", on_click=pin_and_skip, key="pin_and_skip_btn")
 
     # pin expander with clickable question links
     with st.expander("View Pinned Questions"):
