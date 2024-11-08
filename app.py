@@ -139,6 +139,15 @@ if not st.session_state.quiz_completed:
         tbody td {{
             text-align: left;
         }}
+
+        tbody td a {{
+            color: #0066cc; /* Default link color */
+            text-decoration: none;
+        }}
+
+        tbody td a:hover {{
+            color: #348558; /* Hover color matches header background */
+        }}
         </style>
         
         <div class="progress-container">
@@ -167,9 +176,10 @@ if not st.session_state.quiz_completed:
         for pin_index in sorted(st.session_state.pins):
             pinned_question = questions[pin_index]["question"]
             
-            question_link = f'<a href="#" onclick="window.location.reload();" style="text-decoration: none; color: #0066cc;"><strong>Question {pin_index + 1}:</strong> {pinned_question}</a>'
+            question_link = f'<a href="#" onclick="window.location.reload();" style="text-decoration: none; color: #0066cc;">{pinned_question}</a>'
             
             table_data.append({
+                "#": pin_index + 1,
                 "Question": question_link, 
                 "Selected Answer": get_user_answer(pin_index)
             })
