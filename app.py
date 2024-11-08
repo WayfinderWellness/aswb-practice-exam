@@ -164,15 +164,8 @@ if not st.session_state.quiz_completed:
                 color: #348558; /* Hover color matches header background */
             }}
 
-            div.stButton > button {{
-                margin-right: 1rem; /* Spacing between buttons */
-            }}
-
-            .stButtonContainer {{
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                gap: 1rem;
+            table th:nth-child(3), table td:nth-child(3) {{
+                width: 20%;
             }}
         </style>
         
