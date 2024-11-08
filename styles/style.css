@@ -38,6 +38,11 @@ div[class*="st-key-pin_question_"] > div > button {
   margin: auto;
 }
 
+.parent-selector:has(.st-key-prev_btn) {
+  flex-direction: row;
+}
+
+/*
 .expander-content .question-container {
   display: flex;
   align-items: center;
@@ -48,5 +53,6 @@ div[class*="st-key-pin_question_"] > div > button {
   font-size: 1.2em;
 }
 .expander-content .question-text {
-  text-indent: -1.2em; /* Aligns the question text with the question number */
+  text-indent: -1.2em; 
 }
+*/

@@ -161,14 +161,14 @@ if not st.session_state.quiz_completed:
     # Navigation buttons
     btn_col1, btn_col2 = st.columns(2)
     with btn_col1:
-        st.button("← Previous", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
+        st.button("← Previous Question", on_click=prev_question, key="prev_btn", disabled=(st.session_state.current_question == 0))
         if st.session_state.user_answers[st.session_state.current_question] is not None:
             if st.session_state.current_question < len(questions) - 1:
-                st.button("Next →", on_click=next_question, key="next_btn")
+                st.button("Next Question →", on_click=next_question, key="next_btn")
             elif st.session_state.current_question == len(questions) - 1:
-                st.button("Submit ✓", on_click=submit_quiz, key="submit_btn")
+                st.button("Submit Test ✓", on_click=submit_quiz, key="submit_btn")
         else:
-            st.button("Pin & Skip →", on_click=pin_and_skip, key="pin_and_skip_btn")
+            st.button("Pin & Skip Question →", on_click=pin_and_skip, key="pin_and_skip_btn")
 
     # Display pinned questions in a table format
     if st.session_state.pins:
