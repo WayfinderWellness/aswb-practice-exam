@@ -165,7 +165,7 @@ if not st.session_state.quiz_completed:
             }}
 
             table th:nth-child(3), table td:nth-child(3) {{
-                width: 20%;
+                width: 25%;
             }}
         </style>
         
