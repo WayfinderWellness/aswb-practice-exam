@@ -48,13 +48,6 @@ questions = st.session_state.questions
 def get_user_answer(index):
     return st.session_state.user_answers[index] if st.session_state.user_answers[index] is not None else ""
 
-# pin toggle function
-def toggle_pin(question_index):
-    if question_index in st.session_state.pins:
-        st.session_state.pins.remove(question_index)
-    else:
-        st.session_state.pins.add(question_index)
-
 # Navigation functions
 def next_question():
     if st.session_state.current_question < len(questions) - 1:
@@ -64,11 +57,18 @@ def prev_question():
     if st.session_state.current_question > 0:
         st.session_state.current_question -= 1
 
-def pin_and_skip():
-    current_index = st.session_state.current_question
-    st.session_state.pins.add(current_index)
-    if current_index < len(questions) - 1:
-        st.session_state.current_question += 1
+# Pin toggle function
+def toggle_pin(question_index):
+    if question_index in st.session_state.pins:
+        st.session_state.pins.remove(question_index)
+    else:
+        st.session_state.pins.add(question_index)
+
+#def pin_and_skip():
+#    current_index = st.session_state.current_question
+#    st.session_state.pins.add(current_index)
+#    if current_index < len(questions) - 1:
+#        st.session_state.current_question += 1
 
 def jump_to_pinned_question(pin_index):
     st.session_state.current_question = pin_index
@@ -105,8 +105,8 @@ def render_nav_btns(index):
 
     with btn_col2:
         pin_icon = "⭐" if index in st.session_state.pins else "☆"
-        st.button(f"{pin_icon} Pin Question", on_click=pin_and_skip, key="pin_and_skip_btn") 
-        pass 
+        if st.button(f"{pin_icon} Pin Question", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,))
+            pass 
 
     with btn_col3:
         if st.session_state.current_question < len(questions) - 1:
