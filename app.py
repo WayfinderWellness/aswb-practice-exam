@@ -188,10 +188,10 @@ if not st.session_state.quiz_completed:
         current_answer = get_user_answer(pin_index)
 
         # Create three columns for each row
-        col1, col2, col3 = st.columns([1, 4, 3])
+        col1, col2, col3 = st.columns([1, 8, 3])
 
         with col1:
-            st.write(pin_index + 1)  # Display question number
+            st.write(f"{pin_index + 1}")
 
         with col2:
             # Create a clickable question link that will jump to the question
