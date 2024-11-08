@@ -90,11 +90,11 @@ div[class*="pin_question_"] > div > button {
 
 div[class*="pin_question_"],
 .pinned_question_response {
-  padding: 0 0.25em;
+  padding: 0 0.1em;
 }
 
 .pinned_question_response {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-style: italic;
 }
 
