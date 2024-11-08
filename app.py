@@ -135,40 +135,6 @@ if not st.session_state.quiz_completed:
                 opacity: 0.9;
                 border-radius: 5px 0 0 5px;
             }}
-            .table-header-row {{
-                background-color: #348558;
-                color: white;
-                font-weight: bold;
-                padding: 8px;
-                border-radius: 5px;
-                display: flex;
-                justify-content: space-between;
-            }}
-            #pinned-question-header-col1 {{
-                width: calc(100% / 12 * 1);
-            }}
-            #pinned-question-header-col2 {{
-                width: calc(100% / 12 * 8);
-            }}
-            #pinned-question-header-col3 {{
-                width: calc(100% / 12 * 3);
-            }}
-            .row {{
-                padding: 8px;
-                border-bottom: 1px solid #ddd;
-                display: flex;
-                justify-content: space-between;
-            }}
-            .cell {{
-                flex: 1;
-            }}
-            .question-link {{
-                color: #0066cc;
-                text-decoration: none;
-            }}
-            .question-link:hover {{
-                color: #348558;
-            }}
         </style>
         
         <div class="progress-container">
@@ -202,20 +168,18 @@ if not st.session_state.quiz_completed:
         col1, col2, col3 = st.columns([1, 8, 3])
 
         with col1:
-            st.write(f"{pin_index + 1}")
+            st.markdown(f"""<div class="pin_index_{pin_index + 1}">{pin_index + 1}</div>""",unsafe_allow_html=True)
 
         with col2:
-            # Create a clickable question link that will jump to the question
-            if st.button(f"Q{pin_index + 1}: {pinned_question}", key=f"pin_question_{pin_index}"):
+            if st.button(f"{pinned_question}", key=f"pin_question_{pin_index + 1}"):
                 jump_to_pinned_question(pin_index)
 
         with col3:
-            # Dropdown to select the answer
             selected_answer = st.selectbox(
                 "Selected answer",  # Hidden label
                 options=options,
                 index=options.index(current_answer) if current_answer in options else 0,
-                key=f"user_answer_{pin_index}",
+                key=f"pin_response_{pin_index + 1}",
                 label_visibility="collapsed"
             )
 

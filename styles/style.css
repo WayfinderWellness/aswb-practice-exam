@@ -57,6 +57,55 @@ div[class*="st-key-pin_question_"] > div > button {
   display: block;
 }
 
+.table-header-row {
+  background-color: #348558;
+  color: white;
+  font-weight: bold;
+  margin-top: 1em;
+  padding: 8px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#pinned-question-header-col1 {
+  width: calc(100% / 12 * 1);
+}
+
+#pinned-question-header-col2 {
+  width: calc(100% / 12 * 8);
+}
+
+#pinned-question-header-col3 {
+  width: calc(100% / 12 * 3);
+}
+
+.row {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cell {
+  flex: 1;
+}
+
+div[class*="pin_index_"], 
+div[class*="pin_question_"], 
+div[class*="pin_response_"] {
+  padding-top: 0.5em;
+}
+
+.question-link {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.question-link:hover {
+  color: #348558;
+}
+
 /*
 .expander-content .question-container {
   display: flex;
