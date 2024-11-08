@@ -70,6 +70,7 @@ div[class*="st-key-pin_question_"] > div > button {
 
 #pinned-question-header-col1 {
   width: calc(100% / 12 * 1);
+  text-align: center;
 }
 
 #pinned-question-header-col2 {
@@ -78,8 +79,10 @@ div[class*="st-key-pin_question_"] > div > button {
 
 #pinned-question-header-col3 {
   width: calc(100% / 12 * 3);
+  text-align: center;
 }
 
+/*
 .row {
   padding: 8px;
   border-bottom: 1px solid #ddd;
@@ -90,6 +93,7 @@ div[class*="st-key-pin_question_"] > div > button {
 .cell {
   flex: 1;
 }
+*/
 
 div[class*="pin_index_"], 
 div[class*="pin_question_"], 
