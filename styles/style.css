@@ -46,7 +46,7 @@ div[class*="st-key-pin_question_"] > div > button {
   display: flex;
 }
 
-.stHorizontalBlock > .stColumn:nth-child(3) > div > div {
+.stHorizontalBlock > .stColumn:nth-child(3) > div > div > div {
   margin-left: auto;
   display: block;
 }
