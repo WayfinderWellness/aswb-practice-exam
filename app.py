@@ -38,28 +38,28 @@ if 'questions' not in st.session_state:
     st.session_state.user_answers = [None] * len(st.session_state.questions)
     st.session_state.score = None
     st.session_state.quiz_completed = False
-    st.session_state.bookmarks = set()
+    st.session_state.pins = set()
 
 questions = st.session_state.questions
 
-# Bookmark toggle function
-def toggle_bookmark(question_index):
-    if question_index in st.session_state.bookmarks:
-        st.session_state.bookmarks.remove(question_index)
+# pin toggle function
+def toggle_pin(question_index):
+    if question_index in st.session_state.pins:
+        st.session_state.pins.remove(question_index)
     else:
-        st.session_state.bookmarks.add(question_index)
+        st.session_state.pins.add(question_index)
 
 # Navigation functions
-def next_question():
-    if st.session_state.current_question < len(questions) - 1:
-        st.session_state.current_question += 1
-
 def prev_question():
     if st.session_state.current_question > 0:
         st.session_state.current_question -= 1
 
-def jump_to_bookmarked_question(bookmark_index):
-    st.session_state.current_question = bookmark_index
+def next_question():
+    if st.session_state.current_question < len(questions) - 1:
+        st.session_state.current_question += 1
+
+def jump_to_pined_question(pin_index):
+    st.session_state.current_question = pin_index
 
 def submit_quiz():
     st.session_state.score = calculate_score()
@@ -68,10 +68,10 @@ def submit_quiz():
 def display_question(index):
     question = questions[index]
     
-    # Bookmark icon
-    bookmark_icon = "⭐" if index in st.session_state.bookmarks else "☆"
-    if st.button(f"{bookmark_icon} Bookmark", key=f"bookmark_toggle_{index}", on_click=toggle_bookmark, args=(index,)):
-        pass  # The button click updates the bookmark state
+    # pin icon
+    pin_icon = "📌" if index in st.session_state.pins else "☆"
+    if st.button(f"{pin_icon} Pin & Skip", key=f"pin_toggle_{index}", on_click=toggle_pin, args=(index,)):
+        pass  # The button click updates the pin state
 
     # Display question text and options
     st.markdown(f'<div class="current-question"><strong>Question {index + 1}:</strong> {question["question"]}</div>', unsafe_allow_html=True)
@@ -137,21 +137,21 @@ if not st.session_state.quiz_completed:
         elif st.session_state.current_question == len(questions) - 1:
             st.button("Submit", on_click=submit_quiz, key="submit_btn")
 
-    # Bookmark expander with clickable question links
-    with st.expander("View Bookmarked Questions"):
-        if st.session_state.bookmarks:
-            for bookmark_index in sorted(st.session_state.bookmarks):
-                bookmarked_question = questions[bookmark_index]["question"]
-                markdown_text = f"**Question {bookmark_index + 1}:** {bookmarked_question}"
+    # Pin expander with clickable question links
+    with st.expander("View pined Questions"):
+        if st.session_state.pins:
+            for pin_index in sorted(st.session_state.pins):
+                pined_question = questions[pin_index]["question"]
+                markdown_text = f"**Question {pin_index + 1}:** {pined_question}"
                 st.button(
                     markdown_text, 
-                    on_click = jump_to_bookmarked_question,
-                    key = f"bookmark_question_{bookmark_index}", 
-                    args = (bookmark_index,)
+                    on_click = jump_to_pined_question,
+                    key = f"pin_question_{pin_index}", 
+                    args = (pin_index,)
                 )
 
         else:
-            st.write("No questions bookmarked.")
+            st.write("No questions pined.")
 
 # Display score and feedback after submission
 else:
