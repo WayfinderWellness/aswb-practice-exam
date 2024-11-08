@@ -75,11 +75,12 @@ h1 {
 }
 */
 
-div[class*="pin_question_"] {
+div[class*="pin_question_"],
+.pinned_question_response {
   padding-top: 0.5em;
 }
 
-div[class*="pin_response_"] {
+.pinned_question_response {
   font-style: italic;
 }
 

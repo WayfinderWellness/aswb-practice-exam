@@ -171,7 +171,7 @@ if not st.session_state.quiz_completed:
 
             # Display dropdown of the selected response
             selected_answer_text = current_answer if current_answer else "None"
-            st.write(f"**Your answer:** {selected_answer_text}")
+            st.markdown(f"""<div class="pinned_question_response"><strong>Your answer:</strong> {selected_answer_text}</div>""", unsafe_allow_html=True)
             
             #selected_answer = st.radio(
             #    "Selected answer",  # Hidden label
@@ -198,8 +198,8 @@ if not st.session_state.quiz_completed:
         #    )
 
             # Update session state with the selected answer
-            if selected_answer:
-                st.session_state.user_answers[pin_index] = selected_answer
+        #    if selected_answer:
+        #        st.session_state.user_answers[pin_index] = selected_answer
 
 # Display score and feedback after submission
 else:
