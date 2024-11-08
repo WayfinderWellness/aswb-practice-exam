@@ -171,7 +171,11 @@ if not st.session_state.quiz_completed:
 
             # Display dropdown of the selected response
             selected_answer_text = current_answer if current_answer else "None"
-            st.markdown(f"""<div style="margin-left: 0.25em"><strong>Your answer:</strong> {selected_answer_text}</div>""", unsafe_allow_html=True)
+            st.markdown(f"""
+                        <div style="margin-left: 0.25em; font-size: 0.9em; font-style: italic;">
+                        <strong>Your answer:</strong> {selected_answer_text}
+                        </div>
+                        """, unsafe_allow_html=True)
             
             #selected_answer = st.radio(
             #    "Selected answer",  # Hidden label

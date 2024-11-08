@@ -81,11 +81,12 @@ div[class*="pin_question_"] {
 
 div[class*="pin_question_"] > div > button {
   display: inline-block;
+  margin: auto;
+  padding: 0;
   text-align: left;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin: auto;
 }
 
 div[class*="pin_question_"],
