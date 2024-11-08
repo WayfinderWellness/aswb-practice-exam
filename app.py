@@ -193,7 +193,7 @@ if not st.session_state.quiz_completed:
                 )
             })
 
-        # Convert to a DataFrame and render as HTML with custom styling
+        # Convert to a DataFrame and render as HTML with custom style
         pinned_questions_df = pd.DataFrame(table_data)
         st.markdown(pinned_questions_df.to_html(escape=False, index=False), unsafe_allow_html=True)
 
