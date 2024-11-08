@@ -28,16 +28,6 @@ h1 {
   visibility: hidden;
 }
 
-div[class*="st-key-pin_question_"] > div > button {
-  display: inline-block;
-  text-align: left;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  margin: auto;
-}
-
 .stRadio {
   margin-bottom: 1em;
 }
@@ -94,6 +84,16 @@ div[class*="pin_index_"],
 div[class*="pin_question_"], 
 div[class*="pin_response_"] {
   padding-top: 0.5em;
+}
+
+div[class*="pin_question_"] > div > button {
+  display: inline-block;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: auto;
 }
 
 div[class*="pin_question_"] > div > button {

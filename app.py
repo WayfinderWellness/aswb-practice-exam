@@ -171,7 +171,7 @@ if not st.session_state.quiz_completed:
             st.markdown(
                 f"""
                 <a href="#" onclick="window.location.href=window.location.href + '#';" class="pin_question_{pin_index + 1}">
-                    Question {pin_index + 1}: {pinned_question}
+                    <strong>Question {pin_index + 1}:</strong> {pinned_question}
                 </a>
                 """,
                 unsafe_allow_html=True
