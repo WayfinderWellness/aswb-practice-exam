@@ -186,10 +186,11 @@ if not st.session_state.quiz_completed:
                 "#": pin_index + 1,
                 "Question": question_link,
                 "Your Answer": st.selectbox(
-                    "",
+                    "Answer selection",
                     options=options,
                     index=options.index(current_answer) if current_answer in options else 0,
-                    key=f"user_answer_{pin_index}"
+                    key=f"user_answer_{pin_index}",
+                    label_visibility= "collapsed"
                 )
             })
 
