@@ -163,19 +163,30 @@ if not st.session_state.quiz_completed:
         options = [""] + questions[pin_index]["options"]
         current_answer = get_user_answer(pin_index)
 
+        st.markdown(f"""
+            <div style="padding-top: 0.5em; padding-bottom: 0.5em;">
+                <button onclick="window.location.href='#{pin_index}'" style="all: unset; color: #0066cc; cursor: pointer; font-weight: bold;">
+                    Question {pin_index + 1}: {pinned_question}
+                </button>
+                <div style="margin-left: 0.25em; font-size: 0.9em; margin-top: -0.25em;">
+                    <strong>Your Response:</strong> {current_answer}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
         # create container with two rows for each pin: question and answer
-        with st.container():
+        #with st.container():
             # Display the question as a hyperlink to the question
-            if st.button(f"**Question {pin_index + 1}:** {pinned_question}", key=f"pin_question_{pin_index + 1}"):
-                jump_to_pinned_question(pin_index)
+        #    if st.button(f"**Question {pin_index + 1}:** {pinned_question}", key=f"pin_question_{pin_index + 1}"):
+        #        jump_to_pinned_question(pin_index)
 
             # Display dropdown of the selected response
-            selected_answer_text = current_answer if current_answer else "None"
-            st.markdown(f"""
-                        <div style="margin-left: 0.25em; font-size: 0.9em; font-style: italic;">
-                        <strong>Your answer:</strong> {selected_answer_text}
-                        </div>
-                        """, unsafe_allow_html=True)
+        #    selected_answer_text = current_answer if current_answer else "None"
+        #    st.markdown(f"""
+        #                <div style="margin-left: 0.25em; font-size: 0.9em;">
+        #                <strong>Your Response:</strong> {selected_answer_text}
+        #                </div>
+        #                """, unsafe_allow_html=True)
             
             #selected_answer = st.radio(
             #    "Selected answer",  # Hidden label
