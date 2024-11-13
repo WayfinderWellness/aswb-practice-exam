@@ -3,3 +3,5 @@ dash-bootstrap-components
 gspread
 google-auth
 plotly
+dotenv
+os

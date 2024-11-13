@@ -1,2 +1,3 @@
-# Ignore the secrets folder
+# Ignore environment variables
 secrets/
+.env
