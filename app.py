@@ -13,6 +13,9 @@ import plotly.graph_objs as go
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.LITERA])
 app.title = "ASWB Master's Level Practice Exam"
 
+# Expose the underlying Flask server
+server = app.server
+
 # Google Sheets Setup
 scope = ["https://www.googleapis.com/auth/spreadsheets"]
 
