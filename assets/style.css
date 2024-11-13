@@ -1,0 +1,250 @@
+/* assets/style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+  background-color: #F7F0E6;
+  color: #333;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+h1 {
+  color: #348558;
+  font-family: "Alegreya Sans", sans-serif;
+}
+
+.question-text {
+  font-size: 1.4em;
+  font-family: "Playfair Display", sans-serif;
+}
+
+#answer-options > label {
+  padding: 0.125em 0;
+  cursor: pointer;
+}
+
+#answer-options > label > input {
+  margin-right: 0.33em;
+}
+
+.nav-buttons {
+  margin-top: 0;
+}
+
+.nav-buttons > div > button {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+#prev-question,
+#next-question,
+#submit-quiz,
+.go-to-question {
+  color: #ffffff;
+  background-color: #348558;
+  border: 1px solid #348558 !important;
+}
+
+#prev-question:hover,
+#next-question:hover,
+#submit-quiz:hover,
+.go-to-question:hover {
+  background-color: #5AA37A;
+}
+
+#pin-question {
+  color: #222222;
+  background-color: #FFD966;
+  border: 1px solid #E4BB3F;
+}
+
+.already-pinned {
+  color: #ffffff !important;
+  background-color: #BE2F2B !important;
+  border: 1px solid #BE2F2B !important;
+}
+
+.already-pinned:hover {
+  color: #ffffff !important;
+  background-color: #D9534F !important;
+}
+
+#pin-question:hover {
+  background-color: #E4BB3F;
+}
+
+#submit-quiz:disabled {
+  color: #BBB9B5;
+  background-color: #E5E4E2;
+  border: 1px solid #BBB9B5;
+}
+
+.button-class-sx {
+  display: none;
+}
+
+#pinned-questions {
+  margin-top: 1em;
+}
+
+.pinned-question-text > span > strong {
+  color: #348558 !important;
+  font-weight: 800;
+}
+
+.pinned-question-text > span > span > strong {
+  font-weight: 600;
+}
+
+#go-to-question-container {
+  padding-right: 0;
+}
+
+.pinned-question-button {
+  font-weight: 700;
+}
+
+.unpin-question {
+  color: #ffffff !important;
+  background-color: #BE2F2B !important;
+  border: 1px solid #BE2F2B !important;
+}
+
+.unpin-question:hover {
+  color: #ffffff !important;
+  background-color: #D9534F !important;
+}
+
+#score-display {
+  margin-bottom: 0.5em !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.results-category-table > thead > tr > th {
+  background-color: #348558;
+  color: #FFFFFF;
+}
+
+.question-result-container > .accordion-collapse > .accordion-body > p {
+  font-size: 0.9em;
+  font-family: "Source Sans Pro", sans-serif;
+  margin-bottom: 0.5em;
+}
+
+.accordion-item {
+  background-color: #FFFFFF;
+}
+
+.question-accordion-category {
+  display: inline-block;
+  background-color: #c20000;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.33em 0.44em;
+  white-space: nowrap;
+}
+
+.question-category {
+  color: #FFFFFF;
+  font-size: 0.7em;
+  line-height: 1.3em;
+  font-weight: bold;
+}
+
+.category-toggle {
+  margin-bottom: 1em;
+}
+
+#category-filter-wrapper {
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.33em;
+  margin-bottom: 1.5em;
+}
+
+.category-button {
+  font-size: 0.9em;
+  padding: 0.5em 0.75em;
+  border-radius: 10px;
+  margin: 0.2em;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+}
+
+.category-button.selected {
+  color: #FFFFFF !important;
+  font-weight: bold;
+}
+
+.category-button:not(.selected) {
+  background-color: #F7F0E6 !important;
+}
+
+.accordion-header > .accordion-button > .row {
+  margin-right: 0.5em;
+}
+
+.accordion-header > button {
+  background-color: #F9F9F9;
+}
+
+/*
+.correct-answer-header > h2 > button {
+  background-color: #8BC2A355;
+  color: #222222;
+}
+
+.correct-answer-header > h2 > button:not(.collapsed) {
+  background-color: #8BC2A3;
+}
+
+
+.incorrect-answer-header > h2 > button {
+  background-color: #FE8A8755;
+  color: #222222;
+}
+
+.incorrect-answer-header > h2 > button:not(.collapsed) {
+  background-color: #FE8A87;
+}
+*/
+
+.question-column {
+  padding-left: 0.1em;
+}
+
+li {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif; 
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.red-text {
+  color: #FFFFFF;
+  background-color: #BE2F2B;
+  padding: 0.1em 0.2em 0 0.2em;
+  border-radius: 5px;
+}
+
+.yellow-text {
+  color: #FFFFFF;
+  background-color: #C79C1B;
+  padding: 0.1em 0.2em 0.1em 0.2em;
+  border-radius: 5px;
+}
+
+.green-text {
+  color: #FFFFFF;
+  background-color: #348558;
+  padding: 0 0.2em 0.1em 0.2em;
+  border-radius: 5px;
+}
