@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 import plotly.graph_objs as go
 
 # Initialize Dash app with desired theme
-app = dash.Dash(__name__, requests_pathname_prefix="/aswb-masters-exam/", external_stylesheets=[dbc.themes.LITERA])
+app = dash.Dash(__name__, requests_pathname_prefix="/aswb-masters-exam/", serve_locally=True, external_stylesheets=[dbc.themes.LITERA])
 app.title = "ASWB Master's Level Practice Exam"
 
 # Expose the underlying Flask server
