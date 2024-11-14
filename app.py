@@ -39,6 +39,8 @@ service_account_info = {
 
 creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
 client = gspread.authorize(creds)
+
+# Get data from Google Sheet
 SHEET_ID = "1_IYoZGi6IqEd1ibOkuNB3cZ4LEwWGc0BegmKfMoZJ6M"
 sheet = client.open_by_key(SHEET_ID).sheet1
 
