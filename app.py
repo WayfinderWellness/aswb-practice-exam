@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 import plotly.graph_objs as go
 
 # Initialize Dash app with desired theme
-app = dash.Dash(__name__, requests_pathname_prefix="/aswb-masters-exam", external_stylesheets=[dbc.themes.LITERA])
+app = dash.Dash(__name__, requests_pathname_prefix="/aswb-masters-exam/", external_stylesheets=[dbc.themes.LITERA])
 app.title = "ASWB Master's Level Practice Exam"
 
 # Expose the underlying Flask server
@@ -558,26 +558,6 @@ def handle_quiz_actions(next_clicks,
         individual_question_review_h2 = html.H2("Individual Question Review", className="mt-4 mb-3")
         score_display.extend([individual_question_review_h2])
 
-        # Add the category filter toggle buttons, setting them to be visible
-        #category_filter_checklist = dcc.Checklist(
-        #    id="category-filter",
-        #    options=[
-        #        {"label": category, "value": category}
-        #        for category in categories_for_filter
-        #    ],
-        #    value=categories_for_filter,  # Initially select all categories
-        #    inline=True,
-        #    #inputStyle={"display": "none"},  # Hide native checkbox
-        #    style={"display": "flex"}  # Set to visible
-        #)
-
-        # Wrap the checklist in a Div with a class for custom CSS styling
-        #category_filter_wrapper = html.Div(
-        #    category_filter_checklist,
-        #    id="category-filter-wrapper",
-        #    className="category-toggle"
-        #)
-
         # Add the question accordion, setting it to be visible
         question_accordion = dbc.Accordion(
             id="filtered-question-accordion",
@@ -588,12 +568,6 @@ def handle_quiz_actions(next_clicks,
         # Extend score_display to include the checklist
         #score_display.extend([category_filter_wrapper, question_accordion])
         score_display.extend(question_accordion)
-        
-        # Define the question accordion
-        #question_accordion = dbc.Accordion(id="filtered-question-accordion", start_collapsed=True)
-        
-        # Add the accordion to the score display
-        #score_display.append(question_accordion)
         
         # Hide other quiz components (optional, based on previous setup)
         current_question = None  # Reset current question if needed
