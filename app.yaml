@@ -1,0 +1,7 @@
+name: aswb-masters-exam
+services:
+  - environment_slug: python
+    instance_count: 2
+    instance_size_slug: apps-s-1vcpu-1gb
+    run_command: gunicorn app:server --bind 0.0.0.0:8080
+    http_port: 8080
