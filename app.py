@@ -59,11 +59,12 @@ def load_questions():
         questions.append(question)
     return questions
 
-#print(load_questions())
-
 # Define global variables
 questions = load_questions()
 total_questions = len(questions)
+
+# Define a color palette for consistent styling
+color_palette = ["#c20000", "#0074c2", "#28a745", "#ff7f0e", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
 
 # Unique categories for toggle buttons
 categories_for_filter = list(dict.fromkeys([question['category'] for question in questions]))
@@ -74,12 +75,6 @@ category_colors = {}
 # Function to assign a unique color to each category
 def get_category_color(category):
     if category not in category_colors:
-        # Define a color palette to use for categories
-        color_palette = [
-            "#c20000", "#0074c2", "#28a745", "#ff7f0e", "#9467bd",
-            "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
-        ]
-        # Assign a new color from the palette or cycle through if exceeded
         color = color_palette[len(category_colors) % len(color_palette)]
         category_colors[category] = color
     return category_colors[category]
